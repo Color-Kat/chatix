@@ -1,14 +1,29 @@
 const app = require('express')();
+
 const http = require('http').createServer(app);
-const io = require('socket.io')(http);
+const path = require('path');
+const { Server } = require('socket.io');
+
+const cors = require('cors');
+app.use(cors())
+
+const io = new Server(http, {
+    cors: {origin: '*'}
+});
 
 // app.get('/', function(req, res){
-//     res.send("Hello server");
+//     res.sendFile(path.resolve(__dirname, '../client/dist/index.html'));
 // });
 
 io.on('connection', socket => {
-    socket.on('message', (data) => {
-        io.emit('message', data);
+    console.log('User connected');
+    socket.on('chat_message', (data) => {
+        console.log(data);
+        io.emit('chat_message', data);
+    });
+
+    socket.on('disconnect', () => {
+        console.log('User disconnected');
     });
 });
 
