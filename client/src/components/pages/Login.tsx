@@ -4,12 +4,10 @@ interface LoginProps {
     
 }
  
-const Login: FunctionComponent<LoginProps> = () => {
+export const Login: FunctionComponent<LoginProps> = () => {
     return ( 
         <section id="login">
-            
+            login
         </section>
     );
 }
- 
-export default Login;

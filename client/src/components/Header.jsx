@@ -25,9 +25,9 @@ export const Header = ({ }) => {
     }, [location]);
 
     return (
-        <header className="flex sticky top-0 w-full h-16 justify-center shadow-xl z-10">
-            <div className="container flex items-center justify-between px-1">
-              
+        <header className="flex sticky top-0 w-full h-16 justify-center shadow-xl z-20 py-3">
+            <div className="container flex items-center justify-between px-1  z-20">
+
 
                 <Logo />
 
