@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react';
 import io from "socket.io-client";
+import { Main } from "./components/Main";
 
 const socket = io('ws://localhost:4000');
 console.log(socket);
@@ -18,7 +19,7 @@ function App() {
 
   return (
     <div className="App ">
-
+      <Main />
     </div>
   )
 }
