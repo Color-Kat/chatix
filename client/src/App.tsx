@@ -5,10 +5,13 @@ import { Main } from "./components/Main";
 const socket = io('ws://localhost:4000');
 console.log(socket);
 socket.on('connection', (socket) => {
-
+  console.log('connected to ws');
+  
 });
 
 function App() {
+
+
   useEffect(() => {
     socket.on('chat_message', (data: string) => {
       console.log(data);
@@ -18,7 +21,7 @@ function App() {
   }, []);
 
   return (
-    <div className="App ">
+    <div className="App">
       <Main />
     </div>
   )

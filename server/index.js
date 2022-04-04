@@ -1,22 +1,28 @@
 const app = require('express')();
-
 const http = require('http').createServer(app);
 const path = require('path');
 const { Server } = require('socket.io');
-
 const cors = require('cors');
-app.use(cors())
+
+// import * as auth from "./auth.mjs";
+const auth = require('./auth.js');
+
+app.use(cors());
 
 const io = new Server(http, {
     cors: {origin: '*'}
 });
 
-// app.get('/', function(req, res){
-//     res.sendFile(path.resolve(__dirname, '../client/dist/index.html'));
-// });
+app.post('/register', function (req, res) {
+    console.log(req);
+    const result = auth().register("tester", "123");
+    res.send(result);
+});
 
 io.on('connection', socket => {
     console.log('User connected');
+console.log(auth);
+
     socket.on('chat_message', (data) => {
         console.log(data);
         io.emit('chat_message', data);
