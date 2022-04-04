@@ -1,15 +1,21 @@
-const app = require('express')();
-const http = require('http').createServer(app);
-const path = require('path');
-const { Server } = require('socket.io');
-const cors = require('cors');
+import express from 'express';
+import http from 'http';
 
-// import * as auth from "./auth.mjs";
-const auth = require('./auth.js');
 
-app.use(cors());
 
-const io = new Server(http, {
+const app = express();
+const httpServer = http.createServer();
+import { Server } from 'socket.io';
+// const cors = require('cors');
+
+import auth from "./auth.js";
+
+// const auth = require('./auth.js');
+// const auth = import('./auth.js');
+
+// app.use(cors());
+
+const io = new Server(httpServer, {
     cors: {origin: '*'}
 });
 
@@ -19,9 +25,9 @@ app.post('/register', function (req, res) {
     res.send(result);
 });
 
-io.on('connection', socket => {
+io.on('connection', async socket => {
     console.log('User connected');
-console.log(auth);
+    console.log(await auth().register('ColorTest', '123'));
 
     socket.on('chat_message', (data) => {
         console.log(data);
@@ -33,6 +39,6 @@ console.log(auth);
     });
 });
 
-http.listen(4000, function () {
+httpServer.listen(4000, function () {
     console.log('Listening on port 4000');
 })

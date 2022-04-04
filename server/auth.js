@@ -1,34 +1,43 @@
-const { nanoid } = require('nanoid'); // Generate unique id
-const low = require('lowdb'); // Siple json database
-const FileSync = require('lowdb/adapters/FileSync');
-const adapter = new FileSync('db/messages.json');
-const db = low(adapter);
-const bcrypt = require('bcrypt');
+import { nanoid } from "nanoid";
+import { Low, JSONFile } from 'lowdb';
+import path from 'path';
+import bcrypt from 'bcrypt';
+import commonjsVariables from 'commonjs-variables-for-esmodules';
+ 
+const {__dirname,} = commonjsVariables(import.meta);
 
-// interface IUser{
-//     id: number;
-//     nickname: string,
-//     password: string;
-// }
+const adapter = new JSONFile (path.resolve(__dirname, 'db/messages.json'));
+const db = new Low(adapter);
 
-const auth = () => {
+await db.read();
 
+db.data = db.users ? db.data : { users: [], ...db.data };
 
-    const register = (nickname, password) => {
-        const users = db.get('users');
+export default () => {
+    const register = async (nickname, password) => {
+        const users = db.data.users;
+
+        console.log(users);
+
         if (users.some(user => (user.nickname == nickname))) return {
             error: 'Пользователь с таким ником уже существует',
             isSuccess: false
         };
 
-        const salt = bcrypt.getSaltSync(10); // Generate salt for bcrypt password
+        bcrypt.genSalt(10, function(err, salt) {
+            bcrypt.hash(password, salt,async  function(err, hash) {
+                users.push({
+                    id: nanoid(8),
+                    nickname,
+                    password: hash
+                });
 
-        // Inset new user into db
-        db.get('users').push({
-            id: nanoid(8),
-            nickname,
-            password: bcrypt.hashSync(password, salt)
-        }).write(); 
+                await db.write();
+                console.log(123);
+            });
+        });
+        console.log(123);
+
 
         return {
             isSuccess: true
@@ -56,6 +65,3 @@ const auth = () => {
         login
     }
 }
-
-module.exports = auth;
-
