@@ -18,15 +18,11 @@ app.get('/', (req, res) => {
     res.send('123');
 })
 
-app.post('/register', async function (req, res) {
-    const result = await AuthController.register(req, res);
-    res.send(result);
-});
+app.post('/register', AuthController.register);
 
-app.post('/login', async function (req, res) {
-    const result = await AuthController.login(req, res);
-    res.send(result);
-});
+app.post('/login', AuthController.login);
+
+app.post('/users', AuthController.getUsers);
 
 io.on('connection', async socket => {
     console.log('User connected');

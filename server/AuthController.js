@@ -86,9 +86,17 @@ class AuthController {
 
         return res.status(200).json({
             isSuccess: true,
-            payload: user
+            payload: {
+                jwt_token: token,
+                user: user
+            }
         });
+    }
+
+    async getUsers(req, res) {
+        const users = db.data.users;
+        res.status(200).json(users);
     }
 }
 
-export default AuthController;
+export default new AuthController();
