@@ -2,10 +2,7 @@ import express from 'express';
 import http from 'http';
 import bodyParser from 'body-parser';
 import { Server } from 'socket.io';
-// const cors = require('cors');
-import auth from "./auth.js";
-
-// app.use(cors());
+import AuthController from "./AuthController.js";
 
 const app = express();
 const httpServer = http.createServer(app);
@@ -22,8 +19,12 @@ app.get('/', (req, res) => {
 })
 
 app.post('/register', async function (req, res) {
-    console.log();
-    const result = await auth().register(req.body.nickname ?? '', req.body.password ?? '');
+    const result = await AuthController.register(req, res);
+    res.send(result);
+});
+
+app.post('/login', async function (req, res) {
+    const result = await AuthController.login(req, res);
     res.send(result);
 });
 
