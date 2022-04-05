@@ -27,7 +27,8 @@ app.post('/register', function (req, res) {
 
 io.on('connection', async socket => {
     console.log('User connected');
-    console.log(await auth().register('ColorTest', '123'));
+    // console.log(await auth().register('ColorTest', '123'));
+    console.log(await auth().login('ColorTest', '1231'));
 
     socket.on('chat_message', (data) => {
         console.log(data);

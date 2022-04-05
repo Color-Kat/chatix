@@ -17,39 +17,38 @@ export default () => {
     const register = async (nickname, password) => {
         const users = db.data.users;
 
-        console.log(users);
-
         if (users.some(user => (user.nickname == nickname))) return {
             error: 'Пользователь с таким ником уже существует',
             isSuccess: false
         };
 
-        bcrypt.genSalt(10, function(err, salt) {
-            bcrypt.hash(password, salt,async  function(err, hash) {
-                users.push({
-                    id: nanoid(8),
-                    nickname,
-                    password: hash
+        let hashPassword = await new Promise(resolve => {
+            bcrypt.genSalt(10, async function(err, salt) {
+                bcrypt.hash(password, salt, async function (err, hash) {
+                    resolve(hash);
                 });
-
-                await db.write();
-                console.log(123);
             });
-        });
-        console.log(123);
+        })
 
+        users.push({
+            id: nanoid(8),
+            nickname,
+            password: hashPassword
+        });
+
+        await db.write();
 
         return {
             isSuccess: true
         }
     }
 
-    const login = (nickname, password) => {
+    const login = async (nickname, password) => {
         // Get user by nickname
-        const user = db.get('users').find(user => user.nickname == nickname);
+        const user = db.data.users.find(user => user.nickname == nickname);
 
         // Wrong password
-        if (!bcrypt.compare(password, user.password)) return {
+        if (!(await bcrypt.compare(password, user.password))) return {
             error: "Введён неправильный пароль",
             isSuccess: false
         }

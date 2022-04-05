@@ -6,7 +6,7 @@ const socket = io('ws://localhost:4000');
 console.log(socket);
 socket.on('connection', (socket) => {
   console.log('connected to ws');
-  
+
 });
 
 function App() {
@@ -17,7 +17,7 @@ function App() {
       console.log(data);
     });
 
-    socket.emit('chat_message', '123');
+    // socket.emit('chat_message', '123');
   }, []);
 
   return (
