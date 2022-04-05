@@ -17,6 +17,12 @@ export default () => {
     const register = async (nickname, password) => {
         const users = db.data.users;
 
+        // Empty fields
+        if (!nickname || !password) return {
+            error: "Заполните все поля",
+            isSuccess: false
+        }
+
         if (users.some(user => (user.nickname == nickname))) return {
             error: 'Пользователь с таким ником уже существует',
             isSuccess: false
@@ -46,6 +52,12 @@ export default () => {
     const login = async (nickname, password) => {
         // Get user by nickname
         const user = db.data.users.find(user => user.nickname == nickname);
+
+        // Empty fields
+        if (!nickname || !password) return {
+            error: "Заполните все поля",
+            isSuccess: false
+        }
 
         // Wrong password
         if (!(await bcrypt.compare(password, user.password))) return {

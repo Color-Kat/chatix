@@ -1,34 +1,36 @@
 import express from 'express';
 import http from 'http';
-
-
-
-const app = express();
-const httpServer = http.createServer();
+import bodyParser from 'body-parser';
 import { Server } from 'socket.io';
 // const cors = require('cors');
-
 import auth from "./auth.js";
 
-// const auth = require('./auth.js');
-// const auth = import('./auth.js');
-
 // app.use(cors());
+
+const app = express();
+const httpServer = http.createServer(app);
+
+app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({ extended: true }));
 
 const io = new Server(httpServer, {
     cors: {origin: '*'}
 });
 
-app.post('/register', function (req, res) {
-    console.log(req);
-    const result = auth().register("tester", "123");
+app.get('/', (req, res) => {
+    res.send('123');
+})
+
+app.post('/register', async function (req, res) {
+    console.log();
+    const result = await auth().register(req.body.nickname ?? '', req.body.password ?? '');
     res.send(result);
 });
 
 io.on('connection', async socket => {
     console.log('User connected');
     // console.log(await auth().register('ColorTest', '123'));
-    console.log(await auth().login('ColorTest', '1231'));
+    // console.log(await auth().login('ColorTest', '1231'));
 
     socket.on('chat_message', (data) => {
         console.log(data);
