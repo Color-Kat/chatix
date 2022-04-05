@@ -17,7 +17,10 @@ function App() {
       console.log(data);
     });
 
-    // socket.emit('chat_message', '123');
+    socket.emit('chat_message', {
+      authorization_token: "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjJwbncwSkNiIiwiaWF0IjoxNjQ5MTgyMzkxLCJleHAiOjE2NDk1Mjc5OTF9.9qstennisXP3TA8Q1GQZ7qMjhyeN_QxSJ1o5fNBCytM",
+      message: "Deine mutter ist fantastisch"
+    });
   }, []);
 
   return (

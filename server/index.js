@@ -3,6 +3,7 @@ import http from 'http';
 import bodyParser from 'body-parser';
 import { Server } from 'socket.io';
 import AuthController from "./AuthController.js";
+import checkAuth from './checkAuth.js';
 
 const app = express();
 const httpServer = http.createServer(app);
@@ -30,7 +31,8 @@ io.on('connection', async socket => {
     // console.log(await auth().login('ColorTest', '1231'));
 
     socket.on('chat_message', (data) => {
-        console.log(data);
+        console.log(checkAuth(data.authorization_token));
+
         io.emit('chat_message', data);
     });
 
