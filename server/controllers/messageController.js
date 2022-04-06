@@ -5,6 +5,7 @@ import bcrypt from 'bcrypt';
 import commonjsVariables from 'commonjs-variables-for-esmodules';
 import jwt from "jsonwebtoken";
 import { secret } from "../config/jwt_secret.js";
+import checkAuth from "../checkAuth.js";
  
 const {__dirname,} = commonjsVariables(import.meta);
 
@@ -17,7 +18,7 @@ db.data = db.data?.messages ? db.data : { messages: [], ...db.data };
 
 
 class MessageController {
-    async addMessage({ message, authorization_token }) {
+    async addMessage({ to, message, authorization_token }) {
         const userId = checkAuth(authorization_token).id;
         const messages = db.data.messages;
 
@@ -34,6 +35,8 @@ class MessageController {
         messages.push({
             id: nanoid(8),
             message,
+            from: userId,
+            to,
             createdAt: Date.now()
         });
 
@@ -45,7 +48,7 @@ class MessageController {
         }
     }
     
-    async getMessages() {
+    async getMessages(roomId) {
         const messages = db.data.messages;
         return {
             isSuccess: true,

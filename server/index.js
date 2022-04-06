@@ -26,27 +26,32 @@ app.post('/login', authController.login);
 
 app.post('/users', authController.getUsers);
 
-io.on('connection', async socket => {
+
+
+io.on('connection', async (socket) => {
     console.log('User connected');
-    // console.log(await auth().register('ColorTest', '123'));
-    // console.log(await auth().login('ColorTest', '1231'));
+    
 
     socket.on('chat_message', (data) => {
-        // const userId = checkAuth(data.authorization_token).id;
+        const userId = checkAuth(data.authorization_token).id;
+        socket.join(userId);
+        console.log(userId);
+
         // if (!userId) {
         //     io.emit('error', "Вы не авторизованы");
         //     return;
         // }
 
         messageController.addMessage(data);
-
-        io.emit('chat_message', data);
+        io.to(data.to).emit('chat_message', data);
     });
 
     socket.on('disconnect', () => {
         console.log('User disconnected');
     });
 });
+
+
 
 httpServer.listen(4000, function () {
     console.log('Listening on port 4000');
