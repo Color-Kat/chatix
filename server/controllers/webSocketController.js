@@ -23,10 +23,23 @@ class WebSocketController {
         this.socket = socket;
         this.io = io;
 
-        socket.on('messages_of', (data) => this.getMessages(data));
+        socket.on('messages', (data) => this.getMessages(data));
         socket.on('chat_message', (data) => this.chatMessage(data));
         socket.on('disconnect', () => this.disconnect());
         
+    }
+
+    async getMessages(data) {
+        const userId = checkAuth(data.authorization_token).id;
+        const peerId = data.peerId;
+        console.log(data);
+
+        if (!userId || !peerId) { return; }
+
+        const result = messageController.getMessages(userId, peerId);
+
+        console.log(result);
+        this.io.emit('messages', result);
     }
 
     chatMessage(data) {

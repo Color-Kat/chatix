@@ -48,8 +48,17 @@ class MessageController {
         }
     }
     
-    async getMessages(roomId) {
-        const messages = db.data.messages;
+    getMessages(userId, peerId) {
+        if (!userId || !peerId) return [];
+
+        // Get message only for current user and peer user
+        const messages = db.data.messages.filter(message => {
+            return (
+                (message.to == peerId && message.from == userId) || 
+                (message.to == userId && message.from == peerId)
+            );
+        });
+
         return {
             isSuccess: true,
             payload: {messages}
