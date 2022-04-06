@@ -4,16 +4,16 @@ import path from 'path';
 import bcrypt from 'bcrypt';
 import commonjsVariables from 'commonjs-variables-for-esmodules';
 import jwt from "jsonwebtoken";
-import { secret } from "./config/jwt_secret.js";
+import { secret } from "../config/jwt_secret.js";
  
 const {__dirname,} = commonjsVariables(import.meta);
 
-const adapter = new JSONFile (path.resolve(__dirname, 'db/messages.json'));
+const adapter = new JSONFile (path.resolve(__dirname, '../db/users.json'));
 const db = new Low(adapter);
 await db.read();
 
 // Create empty users list if doesn't exist
-db.data = db.users ? db.data : { users: [], ...db.data };
+db.data = db.data?.users ? db.data : { users: [], ...db.data };
 
 // Generate JSW access token for auth
 const generateAccessToken = (id) => {
