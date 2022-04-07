@@ -32,13 +32,11 @@ class WebSocketController {
     async getMessages(data) {
         const userId = checkAuth(data.authorization_token).id;
         const peerId = data.peerId;
-        console.log(data);
 
         if (!userId || !peerId) { return; }
 
         const result = messageController.getMessages(userId, peerId);
 
-        console.log(result);
         this.io.emit('messages', result);
     }
 

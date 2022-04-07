@@ -5,6 +5,7 @@ import bcrypt from 'bcrypt';
 import commonjsVariables from 'commonjs-variables-for-esmodules';
 import jwt from "jsonwebtoken";
 import { secret } from "../config/jwt_secret.js";
+import checkAuth from "../checkAuth.js";
  
 const {__dirname,} = commonjsVariables(import.meta);
 
@@ -22,6 +23,12 @@ const generateAccessToken = (id) => {
 }
 
 class AuthController {
+
+    /**
+     * Register new user by nickname and password from request
+     * @return isSuccess or error
+     */
+
     async register(req, res) {
         const { nickname, password } = req.body;
 
@@ -59,6 +66,11 @@ class AuthController {
         });
     }
 
+    /**
+     * Check nickname and password and then login user.
+     * @return jwt_token, user or error
+     */
+
     async login(req, res) {
         const { nickname, password } = req.body;
 
@@ -93,9 +105,28 @@ class AuthController {
         });
     }
 
+    /**
+     * @return users list
+     */
+
     async getUsers(req, res) {
         const users = db.data.users;
-        res.status(200).json(users);
+        return res.status(200).json(users);
+    }
+
+    /**
+     * @return userData by authorization JWT token from request
+     */
+
+    async getUser(req, res) {
+        const userId = checkAuth(req.body.authorization_token).id;
+        if (!userId) return res.status(403).json({
+            isSuccess: false,
+            error: 'Вы не авторизированы'
+        });
+
+        const user = db.data.users.find(user => user.id == userId);
+        return res.status(200).json(user);
     }
 }
 
