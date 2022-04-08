@@ -129,7 +129,12 @@ class AuthController {
         });
 
         const user = db.data.users.find(user => user.id == userId);
-        return res.json(user);
+        return res.status(200).json({
+            isSuccess: true,
+            payload: {
+                user
+            }
+        });
     }
 }
 
