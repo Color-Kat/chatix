@@ -18,9 +18,12 @@ export const AuthProvider: React.FC = ({ children }: any) => {
         setError(mess ?? 'Произошла непредвиденная ошибка');
     }
 
-    const getAuthUser = async (): Promise<IUser> => {
+    const getAuthUser = async (): Promise<IUser | boolean> => {
         const result = await api<IUser>('/user');
-        if (!result.isSuccess) err(result.error);
+        if (!result.isSuccess) {
+            err(result.error);
+            return false;
+        }
 
         setUser(result.payload);
         return result.payload;
@@ -50,6 +53,11 @@ export const AuthProvider: React.FC = ({ children }: any) => {
         return result.isSuccess;
     }
 
+    const logout = () => {
+        localStorage.setItem('authorization_access_token', '');
+        setUser(null);
+    }
+
     useEffect(() => {
         // getAuthUser().then(res => console.log(res));
     }), [];
@@ -71,7 +79,8 @@ export const AuthProvider: React.FC = ({ children }: any) => {
                 user,
                 getAuthUser,
                 register,
-                login
+                login,
+                logout
             }}
         >
             {children}
