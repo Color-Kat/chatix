@@ -1,14 +1,7 @@
 import jwt from "jsonwebtoken";
 import { secret } from "./config/jwt_secret.js";
 
-export default function (auth_variable) {
-    let token = '';
-    console.log(auth_variable.headers.authorization);
-    if (typeof auth_variable === 'string') token = auth_variable;
-    else token = auth_variable.headers.authorization.split(' ')[1];
-
-    console.log(token);
-
+export default function (token) {
     try {
 
         // const token = bearerToken.split(' ')[1]; 

@@ -1,13 +1,10 @@
-import { useState, useEffect, useContext } from 'react';
+import { useState, useEffect } from 'react';
 import io from "socket.io-client";
 import { Main } from "./components/Main";
-import { authContext } from './context/UserContext';
 
 const socket = io('ws://localhost:4000');
 
 function App() {
-  const { register, login } = useContext(authContext);
-
   useEffect(() => {
     socket.on('connection', (socket) => {
 
@@ -35,13 +32,6 @@ function App() {
 
   return (
     <div className="App">
-      <button onClick={async () => {
-        console.log(await register('Client', '123'));
-      }}>Регистрация</button>
-
-      <button onClick={async () => {
-        console.log(await login('Client', '123'));
-      }}>Логин</button>
       <Main />
     </div>
   )

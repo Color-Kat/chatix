@@ -21,12 +21,12 @@ export async function api<T>(route: string, body: any = {}, auth = true): Promis
     const response = await fetch(apiPath + route, {
         method: 'post',
         headers,
-        // mode: 'no-cors',
-        // credentials:'include',
+        mode: 'no-cors',
+        credentials:'include',
         body: JSON.stringify(body)
     });
 
-    // console.log(await response);
+    console.log(await response);
     
     return await response.json();
 }

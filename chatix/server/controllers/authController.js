@@ -40,7 +40,7 @@ class AuthController {
             isSuccess: false
         });
 
-        if (users.some(user => (user.nickname === nickname))) return res.status(400).json({
+        if (users.some(user => (user.nickname == nickname))) return res.status(400).json({
             error: 'Пользователь с таким ником уже существует',
             isSuccess: false
         });
@@ -75,7 +75,7 @@ class AuthController {
         const { nickname, password } = req.body;
 
         // Empty fields
-        if (!nickname || !password) return res.status(400).json({
+        if (!nickname || !password) return res.json({
             error: "Заполните все поля",
             isSuccess: false
         });
@@ -83,13 +83,13 @@ class AuthController {
         // Get user by nickname
         const user = db.data.users.find(user => user.nickname == nickname);
 
-        if (!user) return res.status(404).json({
+        if (!user) return res.json({
             error: "Такого пользователя не существует",
             isSuccess: false
         });
 
         // Wrong password
-        if (!(await bcrypt.compare(password, user.password))) return res.status(400).json({
+        if (!(await bcrypt.compare(password, user.password))) return res.json({
             error: "Введён неправильный пароль",
             isSuccess: false
         });
@@ -119,14 +119,11 @@ class AuthController {
      */
 
     async getUser(req, res) {
-        const userId = checkAuth(req).id;
-
-        console.log(req.body);
-
-        if (!userId) return res.status(403).json({
+        const userId = checkAuth(req.body.authorization_token).id;
+        if (!userId) return res.end(JSON.stringify({
             isSuccess: false,
             error: 'Вы не авторизированы'
-        });
+        }));
 
         const user = db.data.users.find(user => user.id == userId);
         return res.json(user);
