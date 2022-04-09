@@ -32,19 +32,21 @@ class MessageController {
             error: "Пустое сообщение"
         }
 
-        messages.push({
+        const newMessage = {
             id: nanoid(8),
             message,
             from: userId,
             to,
             createdAt: Date.now()
-        });
+        }
+
+        messages.push(newMessage);
 
         await db.write();
 
         return {
             isSuccess: true,
-            payload: message
+            payload: newMessage
         }
     }
     
@@ -61,7 +63,7 @@ class MessageController {
 
         return {
             isSuccess: true,
-            payload: {messages}
+            payload: {messages, peerId}
         }
     }
 }

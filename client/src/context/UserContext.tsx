@@ -43,7 +43,10 @@ export const AuthProvider: React.FC = ({ children }: any) => {
             user: IUser
         }>('/login', { nickname, password });
 
-        if (!result.isSuccess) return false;
+        if (!result.isSuccess) {
+            err(result.error)
+            return false;
+        }
 
         // Save received jwt token to local storage
         localStorage.setItem('authorization_access_token', result.payload.jwt_token);

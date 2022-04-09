@@ -23,13 +23,13 @@ class WebSocketController {
         this.socket = socket;
         this.io = io;
 
-        socket.on('messages', (data) => this.getMessages(data));
-        socket.on('chat_message', (data) => this.chatMessage(data));
+        socket.on('messages_of', (data) => this.getMessagesOf(data));
+        socket.on('send_message', (data) => this.sendMessage(data));
         socket.on('disconnect', () => this.disconnect());
         
     }
 
-    async getMessages(data) {
+    async getMessagesOf(data) {
         const userId = checkAuth(data.authorization_token).id;
         const peerId = data.peerId;
 
@@ -37,20 +37,22 @@ class WebSocketController {
 
         const result = messageController.getMessages(userId, peerId);
 
-        this.io.emit('messages', result);
+        this.io.emit('messages_of', result);
     }
 
-    chatMessage(data) {
+    sendMessage(data) {
         // Get userId of sender
         const userId = checkAuth(data.authorization_token).id;
         if (!userId) { return; }
         console.log('- New message from: ' + userId + '\n- To: ' + data.to + '\n- Message: ' + data.message);
 
+        delete data.authorization_token;
+
         // Join user to room by userId
         this.socket.join(userId);
 
         messageController.addMessage(data); // Add message to db
-        this.io.to(data.to).emit('chat_message', data); // Send message to client to userId
+        this.io.to(data.to).emit('send_message', data); // Send message to client to userId
     }
 
     
