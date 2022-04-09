@@ -40,22 +40,18 @@ class WebSocketController {
         this.io.emit('messages_of', result);
     }
 
-    sendMessage(data) {
+    async sendMessage(data) {
         // Get userId of sender
         const userId = checkAuth(data.authorization_token).id;
         if (!userId) { return; }
         console.log('- New message from: ' + userId + '\n- To: ' + data.to + '\n- Message: ' + data.message);
 
-        delete data.authorization_token;
-
         // Join user to room by userId
         this.socket.join(userId);
 
-        messageController.addMessage(data); // Add message to db
-        this.io.to(data.to).emit('send_message', data); // Send message to client to userId
+        const result = await messageController.addMessage(data); // Add message to db
+        this.io.to(data.to).to(userId).emit('send_message', result); // Send message to client to userId
     }
-
-    
 
     disconnect() { console.log('User disconnected'); }
 }

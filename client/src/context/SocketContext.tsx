@@ -27,6 +27,8 @@ export const SocketProvider: React.FC = ({ children }: any) => {
 
     function onEvent<T>(event: EventType, callback: (data: T) => void) {
         socket.on(event, (data: IApiResponse<T>) => {
+            console.log(data);
+
             if (!data.isSuccess) {
                 err(data.error);
             } else callback(data.payload);
@@ -76,8 +78,8 @@ export const SocketProvider: React.FC = ({ children }: any) => {
             console.log(data);
         });
 
-        // socket.on('chat_message', (data: string) => {
-        //   console.log(data);
+        // socket.on('send_message', (data) => {
+        //     console.log(data);
         // });
 
         // socket.on('messages_of', (data) => {
