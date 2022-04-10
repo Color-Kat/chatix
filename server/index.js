@@ -31,6 +31,10 @@ app.post('/users', authController.getUsers);
 
 app.post('/user', authController.getUser);
 
+app.post('/notifications', authController.getNotifications);
+
+app.post('/clear-notifications', authController.clearNotifications);
+
 chat(io);
 
 httpServer.listen(4000, function () {

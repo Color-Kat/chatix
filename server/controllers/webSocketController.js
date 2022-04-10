@@ -53,10 +53,10 @@ class WebSocketController {
         const result = await messageController.addMessage(data); // Add message to db
         this.io.to(data.to).to(userId).emit('send_message', result); // Send message to client to userId
 
-        AuthController.newNotification(data.to, userId);
+        
 
         this.io.to(data.to).emit('new_notification', {
-            isSuccess: true,
+            isSuccess: AuthController.newNotification(data.to, userId),
             payload: {peerId: userId}
         }); // Send new message notification
     }

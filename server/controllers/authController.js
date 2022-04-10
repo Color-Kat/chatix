@@ -106,6 +106,44 @@ class AuthController {
         });
     }
 
+    /**
+     * @return users list
+     */
+
+    getUsers(req, res) {
+        const users = db.data.users;
+        return res.status(200).json(users);
+    }
+
+    /**
+     * @return userData by authorization JWT token from request
+     */
+
+    getUser(req, res) {
+        const userId = checkAuth(req).id;
+
+        if (!userId) return res.status(403).json({
+            isSuccess: false,
+            error: 'Вы не авторизированы'
+        });
+
+        const user = db.data.users.find(user => user.id == userId);
+        return res.status(200).json({
+            isSuccess: true,
+            payload: {
+                user
+            }
+        });
+    }
+
+    /**
+     * Save notification from fromID to db for userId
+     * 
+     * @param {*} userId notification receiver
+     * @param {*} fromId sender of new message
+     * @returns 
+     */
+    
     async newNotification(userId, fromId) {
         const user = db.data.users.find(user => user.id == userId);
         const notifications = user.notifications;
@@ -119,29 +157,15 @@ class AuthController {
 
         await db.write();
 
-        return res.json({
-            isSuccess: true,
-            payload: notifications
-        });
+        return true;
     }
 
     /**
-     * @return users list
+     * Return notifications of user
      */
 
-    async getUsers(req, res) {
-        const users = db.data.users;
-        return res.json(users);
-    }
-
-    /**
-     * @return userData by authorization JWT token from request
-     */
-
-    async getUser(req, res) {
+    getNotifications(req, res) {
         const userId = checkAuth(req).id;
-
-        console.log(req.body);
 
         if (!userId) return res.status(403).json({
             isSuccess: false,
@@ -151,9 +175,30 @@ class AuthController {
         const user = db.data.users.find(user => user.id == userId);
         return res.status(200).json({
             isSuccess: true,
-            payload: {
-                user
-            }
+            payload: user.notifications
+        });
+    }
+
+    /**
+     * Clear notifications of req.body.peerId
+     */
+
+    async clearNotifications(req, res) {
+        const userId = checkAuth(req).id;
+        const peerId = req.body.peerId;
+
+        if (!userId) return res.status(403).json({
+            isSuccess: false,
+            error: 'Вы не авторизированы'
+        });
+
+        const user = db.data.users.find(user => user.id == userId);
+        user.notifications[peerId] = undefined;
+
+        await await db.write();
+
+        return res.status(200).json({
+            isSuccess: true
         });
     }
 }
