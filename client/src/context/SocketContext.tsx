@@ -18,6 +18,7 @@ export const socketContext = React.createContext<any>(null);
 export const SocketProvider: React.FC = ({ children }: any) => {
     const [isLoading, setIsLoading] = useState<boolean>(false);
     const [error, setError] = useState<string>("");
+    const [notifications, setNotifications] = useState<{peerId: string, count: number}[]>([]);
     const [currentMessages, setCurrentMessages] = useState<IMessage[]>([]);
     const [currentPeerId, setCurrentPeerId] = useState<string>();
 

@@ -56,7 +56,8 @@ class AuthController {
         users.push({
             id: nanoid(8),
             nickname,
-            password: hashPassword
+            password: hashPassword,
+            notifications: {}
         });
 
         await db.write();
@@ -102,6 +103,25 @@ class AuthController {
                 jwt_token: token,
                 user: user
             }
+        });
+    }
+
+    async newNotification(userId, fromId) {
+        const user = db.data.users.find(user => user.id == userId);
+        const notifications = user.notifications;
+        if (notifications[fromId]) notifications[fromId].count++;
+        else notifications[fromId] = {
+            fromId,
+            count: 1
+        }
+
+        user.notifications = notifications;
+
+        await db.write();
+
+        return res.json({
+            isSuccess: true,
+            payload: notifications
         });
     }
 

@@ -3,17 +3,25 @@
     {
       "id": "-7pWB6of",
       "nickname": "ColorKat",
-      "password": "$2b$10$JM9dkOsgd8bALEHvUORApucn8frShmj9hoSgu.T5w4RXaetQBFdLq"
+      "password": "$2b$10$JM9dkOsgd8bALEHvUORApucn8frShmj9hoSgu.T5w4RXaetQBFdLq",
+      "notifications": {
+        "QWW8kBVX": {
+          "fromId": "QWW8kBVX",
+          "count": 3
+        }
+      }
     },
     {
       "id": "tC9nUBVx",
       "nickname": "ColorKat2",
-      "password": "$2b$10$ncFfI16jud0ltEialwbkNe9jbAa8WnvwVYf7dlaKNn2YFYeh6oyc2"
+      "password": "$2b$10$ncFfI16jud0ltEialwbkNe9jbAa8WnvwVYf7dlaKNn2YFYeh6oyc2",
+      "notifications": {}
     },
     {
       "id": "QWW8kBVX",
       "nickname": "Client",
-      "password": "$2b$10$FKTlQaBlO1K2XI7TbG.9WOaiRCNFJLcyjQiXPvUzihdNt.fyFfO7m"
+      "password": "$2b$10$FKTlQaBlO1K2XI7TbG.9WOaiRCNFJLcyjQiXPvUzihdNt.fyFfO7m",
+      "notifications": {}
     }
   ]
 }

@@ -7,6 +7,7 @@ import jwt from "jsonwebtoken";
 import { secret } from "../config/jwt_secret.js";
 import messageController from "./messageController.js";
 import checkAuth from "../checkAuth.js";
+import AuthController from "./AuthController.js";
  
 const {__dirname,} = commonjsVariables(import.meta);
 
@@ -51,6 +52,13 @@ class WebSocketController {
 
         const result = await messageController.addMessage(data); // Add message to db
         this.io.to(data.to).to(userId).emit('send_message', result); // Send message to client to userId
+
+        AuthController.newNotification(data.to, userId);
+
+        this.io.to(data.to).emit('new_notification', {
+            isSuccess: true,
+            payload: {peerId: userId}
+        }); // Send new message notification
     }
 
     disconnect() { console.log('User disconnected'); }
