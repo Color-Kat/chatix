@@ -7,7 +7,11 @@
       "notifications": {
         "QWW8kBVX": {
           "fromId": "QWW8kBVX",
-          "count": 9
+          "count": 10
+        },
+        "-7pWB6of": {
+          "fromId": "-7pWB6of",
+          "count": 1
         }
       }
     },
@@ -21,7 +25,12 @@
       "id": "QWW8kBVX",
       "nickname": "Client",
       "password": "$2b$10$FKTlQaBlO1K2XI7TbG.9WOaiRCNFJLcyjQiXPvUzihdNt.fyFfO7m",
-      "notifications": {}
+      "notifications": {
+        "-7pWB6of": {
+          "fromId": "-7pWB6of",
+          "count": 3
+        }
+      }
     }
   ]
 }

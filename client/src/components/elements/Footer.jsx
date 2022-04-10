@@ -1,5 +1,5 @@
 import { Link } from "react-router-dom";
-import Logo from "./elements/Logo";
+import Logo from "./Logo";
 import { HeaderLink } from "./Header";
 
 export const Footer = ({ }) => {

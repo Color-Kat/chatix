@@ -1,3 +1,6 @@
+@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap');
+
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
@@ -15,3 +18,24 @@ code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
 }
+
+.bg-app {
+  background-color: #292F3F;
+}
+
+.bg-app-light {
+  background-color: #373E4E;
+}
+
+.bg-app-lightest {
+  background-color: #272A35;
+}
+
+.bg-app-dark {
+  background-color: #272A35;
+}
+
+.font-roboto{
+  font-family: 'Roboto', sans-serif;
+}
+

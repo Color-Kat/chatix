@@ -11,7 +11,7 @@ export const Chat: FunctionComponent<ChatProps> = () => {
     return (
         <section id="chat">
             chat
-            <button onClick={() => { sendMessage('Тестовое сообщение', '-7pWB6of') }}>Отправить</button>
+            <button onClick={() => { sendMessage('Тестовое сообщение', 'QWW8kBVX') }}>Отправить</button>
         </section>
     );
 }
