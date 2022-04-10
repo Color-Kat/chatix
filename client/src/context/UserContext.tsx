@@ -99,10 +99,8 @@ export const AuthProvider: React.FC = ({ children }: any) => {
     }
 
     useEffect(() => {
-        // getNotifications();
-        // clearNotifications('-7pWB6of');
-        // getAuthUser().then(res => console.log(res));
-    }), [];
+        getAuthUser();
+    }, []);
 
 
     // Reset errors

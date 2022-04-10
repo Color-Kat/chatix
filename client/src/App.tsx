@@ -10,11 +10,11 @@ import { Login } from "./components/pages/Login";
 
 
 function App() {
-  const { register, login, logout } = useContext(authContext);
+  const { user, logout } = useContext(authContext);
 
   useEffect(() => {
 
-
+    // logout()
   }, []);
 
   return (
@@ -29,11 +29,19 @@ function App() {
 
 
       {/* <button onClick={logout}>Выйти</button> */}
-      <Routes>
-        <Route path="/" element={<Chats />} />
-        <Route path="/chat/:id" element={<Chat />} />
-        <Route path="/login" element={<Login />} />
-      </Routes>
+
+      {
+        user &&
+        <Routes>
+          <Route path="/" element={<Chats />} />
+          <Route path="/chat/:id" element={<Chat />} />
+          <Route path="/login" element={<Login />} />
+        </Routes>
+      }
+
+      {
+        !user && <Login />
+      }
     </div>
   )
 }
