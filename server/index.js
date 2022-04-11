@@ -29,7 +29,9 @@ app.post('/login', authController.login);
 
 app.post('/users', authController.getUsers);
 
-app.post('/user', authController.getUser);
+app.post('/user', authController.getAuthUser);
+
+app.post('/user/:nickname', authController.getUserByNickname);
 
 app.post('/notifications', authController.getNotifications);
 

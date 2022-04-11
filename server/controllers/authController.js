@@ -119,7 +119,7 @@ class AuthController {
      * @return userData by authorization JWT token from request
      */
 
-    getUser(req, res) {
+    getAuthUser(req, res) {
         const userId = checkAuth(req).id;
 
         if (!userId) return res.status(403).json({
@@ -199,6 +199,28 @@ class AuthController {
 
         return res.status(200).json({
             isSuccess: true
+        });
+    }
+
+    /**
+     * @return userData by user's nickname
+     */
+
+    getUserByNickname (req, res) {
+        const requestedNickname = req.params.nickname;
+
+        const user = db.data.users.find(user => user.nickname == requestedNickname);
+
+        if (!user) return res.status(400).json({
+            isSuccess: false,
+            error: 'Такой пользователь не найден'
+        });
+
+        return res.status(200).json({
+            isSuccess: true,
+            payload: {
+                user
+            }
         });
     }
 }

@@ -7,6 +7,7 @@ import { authContext } from './context/UserContext';
 import { Chats } from "./components/pages/Chats";
 import { Chat } from "./components/pages/Chat";
 import { Auth } from "./components/pages/Auth";
+import { User404 } from './components/pages/User404';
 
 
 function App() {
@@ -18,7 +19,7 @@ function App() {
   }, []);
 
   return (
-    <div className="App bg-app text-white px-6 pt-12 font-roboto w-screen h-screen">
+    <div className="App bg-app text-white px-6 pt-12 font-roboto w-screen h-screen overflow-hidden">
       {/* <button onClick={async () => {
         console.log(await register('Client', '123'));
       }}>Регистрация</button>
@@ -34,7 +35,8 @@ function App() {
         user &&
         <Routes>
           <Route path="/" element={<Chats />} />
-          <Route path="/chat/:id" element={<Chat />} />
+          <Route path="/chat/:userId" element={<Chat />} />
+          <Route path="/user-404" element={<User404 />} />
         </Routes>
       }
 

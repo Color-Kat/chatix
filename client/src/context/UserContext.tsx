@@ -100,6 +100,19 @@ export const AuthProvider: React.FC = ({ children }: any) => {
         getNotifications(); // Load updated notifications list
     }
 
+    const getUserByNickname = async (nickname: string): Promise<IUser|false> => {
+        const result = await api<{user: IUser}>('/user/' + nickname);
+
+        if (!result.isSuccess) {
+            err(result.error)
+            return false;
+        }
+        console.log(result);
+        
+
+        return result.payload.user;
+    }
+
     useEffect(() => {
         // logout()
         getAuthUser();
@@ -127,7 +140,8 @@ export const AuthProvider: React.FC = ({ children }: any) => {
                 login,
                 logout,
                 notifications,
-                clearNotifications
+                clearNotifications,
+                getUserByNickname
             }}
         >
             {children}
