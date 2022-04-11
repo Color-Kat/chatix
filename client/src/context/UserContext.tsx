@@ -101,6 +101,7 @@ export const AuthProvider: React.FC = ({ children }: any) => {
     }
 
     useEffect(() => {
+        // logout()
         getAuthUser();
     }, []);
 

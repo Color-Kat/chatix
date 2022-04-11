@@ -27,7 +27,7 @@ interface AuthProps {
 }
 
 export const Auth: FunctionComponent<AuthProps> = () => {
-    const { register, login } = useContext(authContext);
+    const { register, login, error } = useContext(authContext);
 
     const [action, setAction] = useState<'login' | 'register'>('login');
 
@@ -66,6 +66,8 @@ export const Auth: FunctionComponent<AuthProps> = () => {
                         handleChange={onFormChange}
                     />
 
+                    {error && <span className="text-red-600 text-sm mt-1">{error}</span>}
+
                     <div className="login__control flex justify-between items-center mt-3">
                         <button
                             onClick={() => { setAction('register') }}
@@ -100,6 +102,8 @@ export const Auth: FunctionComponent<AuthProps> = () => {
                         handleChange={onFormChange}
                     />
 
+                    {error && <span className="text-red-600 text-sm mt-1">{error}</span>}
+
                     <div className="login__control flex justify-between items-center mt-3">
                         <button
                             onClick={() => { setAction('login') }}
@@ -107,7 +111,10 @@ export const Auth: FunctionComponent<AuthProps> = () => {
                         >Войти</button>
 
                         <button
-                            onClick={login}
+                            onClick={async () => {
+                                const result = await register(data.nickname, data.password);
+                                if (result) setAction('login');
+                            }}
                             className="bg-app-blue py-2.5 px-7 rounded-xl text-base tracking-wider"
                         >Зарегистрироваться</button>
                     </div>
