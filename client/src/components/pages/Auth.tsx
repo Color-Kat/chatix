@@ -52,7 +52,7 @@ export const Auth: FunctionComponent<AuthProps> = () => {
                     <h1 className="text-3xl tracking-wide mb-2.5">Войти</h1>
                     <LoginField
                         type="text"
-                        placeholder="Ник"
+                        placeholder="Ваш ник"
                         name="nickname"
                         value={data.nickname}
                         handleChange={onFormChange}
@@ -83,7 +83,34 @@ export const Auth: FunctionComponent<AuthProps> = () => {
             {action === 'register' &&
                 <section id="register">
                     <h1 className="text-3xl tracking-wide mb-2.5">Регистрация</h1>
-                    register
+
+                    <LoginField
+                        type="text"
+                        placeholder="Ник"
+                        name="nickname"
+                        value={data.nickname}
+                        handleChange={onFormChange}
+                    />
+
+                    <LoginField
+                        type="password"
+                        placeholder="Пароль"
+                        name="password"
+                        value={data.password}
+                        handleChange={onFormChange}
+                    />
+
+                    <div className="login__control flex justify-between items-center mt-3">
+                        <button
+                            onClick={() => { setAction('login') }}
+                            className="underline-offset-1 underline tracking-wider"
+                        >Войти</button>
+
+                        <button
+                            onClick={login}
+                            className="bg-app-blue py-2.5 px-7 rounded-xl text-base tracking-wider"
+                        >Зарегистрироваться</button>
+                    </div>
                 </section>
             }
         </section>
