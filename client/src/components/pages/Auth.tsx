@@ -1,4 +1,5 @@
-import { FunctionComponent, useState } from "react";
+import { FunctionComponent, useContext, useState } from "react";
+import { authContext } from "../../context/UserContext";
 
 interface LoginFieldProps {
     type: 'email' | 'text' | 'password';
@@ -26,6 +27,8 @@ interface AuthProps {
 }
 
 export const Auth: FunctionComponent<AuthProps> = () => {
+    const { register, login } = useContext(authContext);
+
     const [action, setAction] = useState<'login' | 'register'>('login');
 
     const [data, setData] = useState<{ nickname: string, password: string }>({
@@ -40,9 +43,6 @@ export const Auth: FunctionComponent<AuthProps> = () => {
 
         console.log(data);
     }
-
-    const login = () => { }
-    const register = () => { }
 
 
     return (
@@ -73,7 +73,7 @@ export const Auth: FunctionComponent<AuthProps> = () => {
                         >Регистрация</button>
 
                         <button
-                            onClick={login}
+                            onClick={() => { login(data.nickname, data.password) }}
                             className="bg-app-blue py-2.5 px-7 rounded-xl text-base tracking-wider"
                         >Войти</button>
                     </div>
@@ -113,6 +113,10 @@ export const Auth: FunctionComponent<AuthProps> = () => {
                     </div>
                 </section>
             }
+
+            <span className="auth__footer absolute bottom-10 text-white text-opacity-25">
+                @Chatix. All rights reserved.
+            </span>
         </section>
     );
 }

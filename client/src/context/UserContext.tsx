@@ -48,6 +48,8 @@ export const AuthProvider: React.FC = ({ children }: any) => {
 
     // Login user by nickname and password. If success, store jwt token
     const login = async (nickname: string, password: string): Promise<boolean> => {
+        console.log(nickname, password);
+
         // If success, we get jwt token
         const result = await api<{
             jwt_token: string,
@@ -105,6 +107,8 @@ export const AuthProvider: React.FC = ({ children }: any) => {
 
     // Reset errors
     useEffect(() => {
+        console.log(error);
+
         setTimeout(() => {
             setError("");
         }, 7000);
