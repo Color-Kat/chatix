@@ -35,7 +35,7 @@ function App() {
         user &&
         <Routes>
           <Route path="/" element={<Chats />} />
-          <Route path="/chat/:userId" element={<Chat />} />
+          <Route path="/chat/:peerId" element={<Chat />} />
           <Route path="/user-404" element={<User404 />} />
         </Routes>
       }

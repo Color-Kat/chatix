@@ -1,4 +1,4 @@
-import { FunctionComponent } from "react";
+import { FunctionComponent, useContext, useEffect } from "react";
 
 import { Header } from "../elements/Header";
 import { Main } from '../elements/Main.jsx';
@@ -11,6 +11,7 @@ interface ChatsProps {
 }
 
 export const Chats: FunctionComponent<ChatsProps> = () => {
+
     return (
         <section id="chats">
             <Header>

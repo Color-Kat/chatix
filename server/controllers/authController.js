@@ -57,6 +57,8 @@ class AuthController {
             id: nanoid(8),
             nickname,
             password: hashPassword,
+            image: 'https://sun9-32.userapi.com/impf/c853428/v853428972/210be5/TEX4SUcRtK8.jpg?size=689x1080&quality=96&sign=9b6e14d8e04ace5ff72332c71015a281&type=album',
+            myChats: [],
             notifications: {}
         });
 
@@ -207,9 +209,12 @@ class AuthController {
      */
 
     getUserByNickname (req, res) {
-        const requestedNickname = req.params.nickname;
+        const requestedField = req.params.requestedField;
+        const { type } = req.query; // Type of search (by nickname or id)
 
-        const user = db.data.users.find(user => user.nickname == requestedNickname);
+        const user = db.data.users.find(user => {
+            return type === "nickname" ? user.nickname == requestedField : user.id == requestedField;
+        });
 
         if (!user) return res.status(400).json({
             isSuccess: false,
@@ -222,6 +227,23 @@ class AuthController {
                 user
             }
         });
+    }
+
+    async addToMychat (req, res) {
+        const userId = checkAuth(req).id;
+        const peerId = req.body.peerId;
+
+        if (!userId) return res.status(403).json({
+            isSuccess: false,
+            error: 'Вы не авторизированы'
+        });
+
+        const user = db.data.users.find(user => user.id == userId);
+        if (!user.myChats.contains(peerId)) user.myChats.push(peerId);
+
+        return res.status(200).json({
+            isSuccess: true
+        })
     }
 }
 

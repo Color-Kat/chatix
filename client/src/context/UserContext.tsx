@@ -5,6 +5,9 @@ export interface IUser {
     id: string;
     nickname: string;
     password: string;
+    image: string;
+    myChats: string[];
+    notifications: { [key: string]: INotifiication };
 }
 
 export interface INotifiication {
@@ -100,17 +103,37 @@ export const AuthProvider: React.FC = ({ children }: any) => {
         getNotifications(); // Load updated notifications list
     }
 
-    const getUserByNickname = async (nickname: string): Promise<IUser|false> => {
-        const result = await api<{user: IUser}>('/user/' + nickname);
+    // Find user by his nickname
+    const getUserByNickname = async (nickname: string): Promise<IUser | false> => {
+        const result = await api<{ user: IUser }>('/user/' + nickname + "?type=nickname");
 
         if (!result.isSuccess) {
             err(result.error)
             return false;
         }
-        console.log(result);
-        
 
         return result.payload.user;
+    }
+
+    // Find user by his userId
+    const getUserById = async (userId: string): Promise<IUser | false> => {
+        const result = await api<{ user: IUser }>('/user/' + userId + "?type=user_id");
+
+        if (!result.isSuccess) {
+            err(result.error)
+            return false;
+        }
+
+        return result.payload.user;
+    }
+
+    const addToMyChats = async (peerId: string): Promise<boolean> => {
+        const result = await api('/add-to-chats', { peerId });
+
+        if (!result.isSuccess) {
+            err(result.error)
+            return false;
+        } else return true;
     }
 
     useEffect(() => {
@@ -141,7 +164,10 @@ export const AuthProvider: React.FC = ({ children }: any) => {
                 logout,
                 notifications,
                 clearNotifications,
-                getUserByNickname
+
+                getUserByNickname,
+                getUserById,
+                addToMyChats
             }}
         >
             {children}

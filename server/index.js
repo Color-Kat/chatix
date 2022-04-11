@@ -31,11 +31,13 @@ app.post('/users', authController.getUsers);
 
 app.post('/user', authController.getAuthUser);
 
-app.post('/user/:nickname', authController.getUserByNickname);
+app.post('/user/:requestedField', authController.getUserByNickname);
 
 app.post('/notifications', authController.getNotifications);
 
 app.post('/clear-notifications', authController.clearNotifications);
+
+app.post('/add-to-chats', authController.addToMychat);
 
 chat(io);
 
