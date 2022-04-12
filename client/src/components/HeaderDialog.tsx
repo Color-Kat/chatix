@@ -15,7 +15,7 @@ export const HeaderDialog: FunctionComponent<HeaderDialogProps> = ({ nickname, i
             <button className="mr-3" onClick={() => { navigate(-1) }}><IoMdArrowRoundBack /></button>
 
             <img src={image} alt="(*)" className="w-12 h-12 rounded-full object-cover shadow-3xl" />
-            <h1 className="pl-4 tracking-wider">{nickname}</h1>
+            <h1 className="pl-4 tracking-wider text-3xl">{nickname}</h1>
         </div >
     );
 }

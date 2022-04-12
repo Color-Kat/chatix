@@ -17,6 +17,7 @@ const HeaderLinkMobile = ({ to, children }) => {
 export const Header = ({ children }) => {
     return (
         <header className="flex sticky top-0 w-full z-20 text-3xl flex-wrap items-center h-max">
+            {/* // <header className="flex relative w-full z-20 text-3xl flex-wrap items-center h-10"> */}
             {/* <div className="container flex items-center justify-between px-1  z-20">
                 <Logo />
             </div> */}

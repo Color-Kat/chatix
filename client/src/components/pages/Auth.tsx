@@ -40,8 +40,6 @@ export const Auth: FunctionComponent<AuthProps> = () => {
         setData(prev => ({
             ...prev, [name]: e.target.value
         }));
-
-        console.log(data);
     }
 
 
