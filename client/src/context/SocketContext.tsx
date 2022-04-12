@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import io from "socket.io-client";
 import { api, IApiResponse } from "../utils/api";
 
-export type EventType = 'send_message' | 'messages_of';
+export type EventType = 'connect_user' | 'send_message' | 'messages_of';
 export interface IMessage {
     id: string;
     message: string;
@@ -18,7 +18,7 @@ export const socketContext = React.createContext<any>(null);
 export const SocketProvider: React.FC = ({ children }: any) => {
     const [isLoading, setIsLoading] = useState<boolean>(false);
     const [error, setError] = useState<string>("");
-    const [notifications, setNotifications] = useState<{peerId: string, count: number}[]>([]);
+    const [notifications, setNotifications] = useState<{ peerId: string, count: number }[]>([]);
     const [currentMessages, setCurrentMessages] = useState<IMessage[]>([]);
     const [currentPeerId, setCurrentPeerId] = useState<string>();
 
@@ -39,6 +39,14 @@ export const SocketProvider: React.FC = ({ children }: any) => {
     const emit = (event: EventType, data: any) => {
         data.authorization_token = localStorage.getItem('authorization_access_token') ?? '';
         socket.emit(event, data);
+    }
+
+    /**
+     * Connect user to websocket room
+     */
+
+    const connectUser = () => {
+        emit('connect_user', {});
     }
 
     /**
@@ -64,10 +72,9 @@ export const SocketProvider: React.FC = ({ children }: any) => {
     }
 
     useEffect(() => {
-        // socket.on('connected', () => {
-        //     console.log('connected');
-
         // getMessagesOf('2pnw0JCb');
+
+        connectUser();
 
         // Save messages and companion peerId when we get messages of somebody
         onEvent<{ messages: IMessage[], peerId: string }>('messages_of', (data) => {

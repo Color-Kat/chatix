@@ -1,13 +1,15 @@
-import { FunctionComponent, useContext, useEffect, useRef, useState } from "react";
+import { ChangeEvent, FunctionComponent, useContext, useEffect, useRef, useState } from "react";
 import { IoSend } from 'react-icons/io5';
+import { socketContext } from "../../context/SocketContext";
 
 interface MessageFieldProps {
-
+    peerId: string
 }
 
-export const MessageField: FunctionComponent<MessageFieldProps> = () => {
-
+export const MessageField: FunctionComponent<MessageFieldProps> = ({peerId}) => {
     const textArea = useRef<HTMLTextAreaElement>(null);
+    const { sendMessage } = useContext(socketContext);
+    const [message, setMessage] = useState<string>('');
 
     const textAreaAutoResize = () => {
         if (textArea.current) {
@@ -26,10 +28,13 @@ export const MessageField: FunctionComponent<MessageFieldProps> = () => {
         }
     }
 
-    const changeHandle = () => {
+    const changeHandle = (e: ChangeEvent<HTMLTextAreaElement>) => {
         textAreaAutoResize();
+        setMessage(e.target.value);
+    }
 
-
+    const send = async () => {
+        sendMessage(message, peerId);
     }
 
     useEffect(() => {
@@ -44,14 +49,17 @@ export const MessageField: FunctionComponent<MessageFieldProps> = () => {
                 name="message"
                 id="message-field"
                 placeholder="Сообщение"
+                value={message}
                 style={{
                     minHeight: 40,
-                    maxHeight: 160
+                    height: 40,
+                    maxHeight: 120
                 }}
                 className="flex flex-1 bg-app-dark rounded-lg py-2 px-2.5 text-base tracking-wider outline-none resize-none"
             ></textarea>
             <button
                 className="h-10 w-10 bg-app-light flex items-center justify-center rounded-lg"
+                onClick={send}
             ><IoSend size={16} opacity="55" color="white" /></button>
         </div>
     );

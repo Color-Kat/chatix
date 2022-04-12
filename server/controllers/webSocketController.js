@@ -24,10 +24,20 @@ class WebSocketController {
         this.socket = socket;
         this.io = io;
 
+        socket.on('connect_user', (data) => this.connectUser(data));
         socket.on('messages_of', (data) => this.getMessagesOf(data));
         socket.on('send_message', (data) => this.sendMessage(data));
         socket.on('disconnect', () => this.disconnect());
-        
+    }
+
+    connectUser(data) {
+        // Get userId of sender
+        const userId = checkAuth(data.authorization_token).id;
+        if (!userId) { return; }
+        console.log('- New message from: ' + userId + '\n- To: ' + data.to + '\n- Message: ' + data.message);
+
+        // Join user to room by userId
+        this.socket.join(userId);
     }
 
     async getMessagesOf(data) {
@@ -47,13 +57,8 @@ class WebSocketController {
         if (!userId) { return; }
         console.log('- New message from: ' + userId + '\n- To: ' + data.to + '\n- Message: ' + data.message);
 
-        // Join user to room by userId
-        this.socket.join(userId);
-
         const result = await messageController.addMessage(data); // Add message to db
-        this.io.to(data.to).to(userId).emit('send_message', result); // Send message to client to userId
-
-        
+        this.io.to(userId).to(data.to).emit('send_message', result); // Send message to client to userId
 
         this.io.to(data.to).emit('new_notification', {
             isSuccess: AuthController.newNotification(data.to, userId),

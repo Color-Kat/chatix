@@ -43,7 +43,7 @@ export const Chat: FunctionComponent<ChatProps> = () => {
                 </div>
             </Main>
 
-            <MessageField />
+            <MessageField peerId={peerId ?? ''} />
 
 
 

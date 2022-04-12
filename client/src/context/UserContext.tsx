@@ -31,14 +31,14 @@ export const AuthProvider: React.FC = ({ children }: any) => {
 
     // Set authorized user
     const getAuthUser = async (): Promise<IUser | boolean> => {
-        const result = await api<IUser>('/user');
+        const result = await api<{ user: IUser }>('/user');
         if (!result.isSuccess) {
             err(result.error);
             return false;
         }
 
-        setUser(result.payload);
-        return result.payload;
+        setUser(result.payload.user);
+        return result.payload.user;
     }
 
     // register new user

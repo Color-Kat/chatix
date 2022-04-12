@@ -14,15 +14,10 @@ export const HeaderSearch: FunctionComponent<HeaderSearchProps> = () => {
 
     const search = async () => {
         const result = await getUserByNickname(nickname);
-        console.log(result);
 
         if (result) navigate('/chat/' + result.id);
         else navigate('/user-404');
     }
-
-    useEffect(() => {
-        console.log(nickname);
-    });
 
     return (
         <div id="header-search" className="flex w-full justify-betwee h-10 items-center">
