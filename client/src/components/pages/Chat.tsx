@@ -17,10 +17,11 @@ interface ChatProps {
 }
 
 export const Chat: FunctionComponent<ChatProps> = () => {
-    const { getUserById, addToMyChats } = useContext(authContext);
+    const { user, getUserById, addToMyChats } = useContext(authContext);
     const { loadMessagesOf, currentMessages } = useContext(socketContext);
 
-    const { peerId } = useParams();
+    const userId = user.id; // UserId of auth user (me)
+    const { peerId } = useParams(); // UserId of companion (chat partner)
 
     const [peerUser, setPeerUser] = useState<IUser>();
 
@@ -47,7 +48,7 @@ export const Chat: FunctionComponent<ChatProps> = () => {
             </Header>
 
             <Main>
-                {/* <MessagesList messages={ currentMessages }/> */}
+                <MessagesList userId={userId} messages={currentMessages} />
             </Main>
 
             <MessageField peerId={peerId ?? ''} />
