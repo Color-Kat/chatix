@@ -8,15 +8,16 @@ import { Chats } from "./components/pages/Chats";
 import { Chat } from "./components/pages/Chat";
 import { Auth } from "./components/pages/Auth";
 import { User404 } from './components/pages/User404';
+import { socketContext } from './context/SocketContext';
 
 
 function App() {
   const { user, logout } = useContext(authContext);
+  const { setAuthUserId } = useContext(socketContext);
 
   useEffect(() => {
-
-    // logout()
-  }, []);
+    if (user) setAuthUserId(user.id);
+  }, [user]);
 
   return (
     <div className="App bg-app text-white px-6 pt-12 font-roboto w-screen h-screen overflow-hidden">

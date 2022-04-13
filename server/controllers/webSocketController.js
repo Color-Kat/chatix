@@ -34,7 +34,6 @@ class WebSocketController {
         // Get userId of sender
         const userId = checkAuth(data.authorization_token).id;
         if (!userId) { return; }
-        console.log('- New message from: ' + userId + '\n- To: ' + data.to + '\n- Message: ' + data.message);
 
         // Join user to room by userId
         this.socket.join(userId);

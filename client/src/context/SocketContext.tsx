@@ -20,7 +20,9 @@ export const SocketProvider: React.FC = ({ children }: any) => {
     const [error, setError] = useState<string>("");
     const [notifications, setNotifications] = useState<{ peerId: string, count: number }[]>([]);
     const [currentMessages, setCurrentMessages] = useState<IMessage[]>([]);
-    const [currentPeerId, setCurrentPeerId] = useState<string>();
+
+    const [authUserId, setAuthUserId] = useState<string>('');
+    // const [currentPeerId, setCurrentPeerId] = useState<string>();
 
     function err(mess: string | undefined) {
         setError(mess ?? 'Произошла непредвиденная ошибка');
@@ -28,7 +30,7 @@ export const SocketProvider: React.FC = ({ children }: any) => {
 
     function onEvent<T>(event: EventType, callback: (data: T) => void) {
         socket.on(event, (data: IApiResponse<T>) => {
-            console.log(data);
+            // console.log(data);
 
             if (!data.isSuccess) {
                 err(data.error);
@@ -58,6 +60,7 @@ export const SocketProvider: React.FC = ({ children }: any) => {
 
     const loadMessagesOf = (peerId: string) => {
         emit('messages_of', { peerId });
+        // setCurrentPeerId(peerId); // Save current peerId for update message list
     }
 
     /**
@@ -73,11 +76,9 @@ export const SocketProvider: React.FC = ({ children }: any) => {
         emit('send_message', {
             to, message
         });
-
     }
 
     useEffect(() => {
-        // getMessagesOf('2pnw0JCb');
 
 
         // Reconnect user after every socket connection
@@ -88,17 +89,14 @@ export const SocketProvider: React.FC = ({ children }: any) => {
         // Save messages and companion peerId when we get messages of somebody
         onEvent<{ messages: IMessage[], peerId: string }>('messages_of', (data) => {
             setCurrentMessages(data.messages);
-            setCurrentPeerId(data.peerId);
         });
 
-        onEvent('send_message', (data) => {
-            console.log(data);
+        onEvent<IMessage>('send_message', (data) => {
+            console.log('me - ' + authUserId);
+            console.log((authUserId == data.to ? data.from : data.to));
+
+            loadMessagesOf((authUserId == data.to ? data.from : data.to));
         });
-
-        // socket.on('messages_of', (data) => {
-        //     console.log(data);
-        // });
-
     }), [];
 
 
@@ -115,10 +113,13 @@ export const SocketProvider: React.FC = ({ children }: any) => {
                 error, // errors messages
                 isLoading, // loading state
 
+                setAuthUserId,
+                // setCurrentPeerId,
+
                 loadMessagesOf,
                 sendMessage,
 
-                currentPeerId,
+                // currentPeerId,
                 currentMessages,
             }}
         >

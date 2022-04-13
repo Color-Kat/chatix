@@ -18,9 +18,18 @@ export const MessagesList: FunctionComponent<MessagesListProps> = ({ userId, mes
 
     return (
         <div className="messages-list w-full flex flex-col">
-            <span>123</span>
-            <span>123</span>
-            <span>123</span>
+            {messages.map(message => {
+                const id = message.id;
+                const text = message.message;
+                const from = message.from;
+
+                return (
+
+                    <div className="messages-list__message" key={id}>
+                        {text}
+                    </div>
+                );
+            })}
         </div>
     );
 }
