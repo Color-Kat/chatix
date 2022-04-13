@@ -6,7 +6,7 @@ interface MessageFieldProps {
     peerId: string
 }
 
-export const MessageField: FunctionComponent<MessageFieldProps> = ({peerId}) => {
+export const MessageField: FunctionComponent<MessageFieldProps> = ({ peerId }) => {
     const textArea = useRef<HTMLTextAreaElement>(null);
     const { sendMessage } = useContext(socketContext);
     const [message, setMessage] = useState<string>('');
@@ -35,6 +35,7 @@ export const MessageField: FunctionComponent<MessageFieldProps> = ({peerId}) => 
 
     const send = async () => {
         sendMessage(message, peerId);
+        setMessage('');
     }
 
     useEffect(() => {
@@ -55,10 +56,10 @@ export const MessageField: FunctionComponent<MessageFieldProps> = ({peerId}) => 
                     height: 40,
                     maxHeight: 120
                 }}
-                className="flex flex-1 bg-app-dark rounded-lg py-2 px-2.5 text-base tracking-wider outline-none resize-none"
+                className="flex flex-1 bg-app-dark rounded-lg py-2 px-2.5 text-base tracking-wider outline-none resize-none shadow-lg"
             ></textarea>
             <button
-                className="h-10 w-10 bg-app-light flex items-center justify-center rounded-lg"
+                className="h-10 w-10 bg-app-light flex items-center justify-center rounded-lg shadow-lg"
                 onClick={send}
             ><IoSend size={16} opacity="55" color="white" /></button>
         </div>
