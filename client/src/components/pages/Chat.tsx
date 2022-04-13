@@ -1,11 +1,13 @@
 import { FunctionComponent, useContext, useEffect, useState } from "react";
 import { IoLogoChrome } from "react-icons/io";
 import { useParams } from "react-router-dom";
+import { socketContext } from "../../context/SocketContext";
 import { authContext, IUser } from "../../context/UserContext";
 
 import { Header } from '../elements/Header';
 import { Main } from '../elements/Main';
 import { MessageField } from "../elements/MessageField";
+import { MessagesList } from "../elements/MessagesList";
 import { HeaderDialog } from "../HeaderDialog";
 import { HeaderName } from "../HeaderName";
 import { User404 } from "./User404";
@@ -15,12 +17,13 @@ interface ChatProps {
 }
 
 export const Chat: FunctionComponent<ChatProps> = () => {
-    const { sendMessage, getUserById } = useContext(authContext);
+    const { getUserById, addToMyChats } = useContext(authContext);
+    const { loadMessagesOf, currentMessages } = useContext(socketContext);
+
     const { peerId } = useParams();
 
     const [peerUser, setPeerUser] = useState<IUser>();
 
-    const { addToMyChats } = useContext(authContext);
 
     // Load peer user (companion)
     const loadPeerUser = async () => {
@@ -28,8 +31,13 @@ export const Chat: FunctionComponent<ChatProps> = () => {
         setPeerUser(result);
     }
 
+    const loadMessages = async () => {
+        const result = loadMessagesOf(peerId);
+    }
+
     useEffect(() => {
-        loadPeerUser();
+        loadPeerUser(); // Load data about peer user (our companion)
+        loadMessages(); // Load all message. It will be available in variable currentMessages
     }, []);
 
     return (
@@ -39,8 +47,7 @@ export const Chat: FunctionComponent<ChatProps> = () => {
             </Header>
 
             <Main>
-                <div className="chat__messages">
-                </div>
+                {/* <MessagesList messages={ currentMessages }/> */}
             </Main>
 
             <MessageField peerId={peerId ?? ''} />

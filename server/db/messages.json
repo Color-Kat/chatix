@@ -1,116 +1,32 @@
 {
   "messages": [
     {
-      "id": "CSqpDLPd",
-      "message": "fsdafasfsdf",
+      "id": "AsmxD03U",
+      "message": "123",
       "from": "QWW8kBVX",
       "to": "-7pWB6of",
-      "createdAt": 1649788918545
+      "createdAt": 1649847517601
     },
     {
-      "id": "q4AhbZzX",
-      "message": "fsdafasfsdf",
+      "id": "TUTgFJql",
+      "message": "123",
       "from": "QWW8kBVX",
       "to": "-7pWB6of",
-      "createdAt": 1649789005369
+      "createdAt": 1649847519070
     },
     {
-      "id": "c4sXoj1q",
-      "message": "fsdafasfsdf",
-      "from": "QWW8kBVX",
-      "to": "-7pWB6of",
-      "createdAt": 1649789006798
+      "id": "gtvPlkDe",
+      "message": "123",
+      "from": "-7pWB6of",
+      "to": "QWW8kBVX",
+      "createdAt": 1649847521506
     },
     {
-      "id": "Sohc-HfL",
-      "message": "lox",
-      "from": "QWW8kBVX",
-      "to": "-7pWB6of",
-      "createdAt": 1649789031185
-    },
-    {
-      "id": "7TvuscvR",
-      "message": "lox",
-      "from": "QWW8kBVX",
-      "to": "-7pWB6of",
-      "createdAt": 1649789222313
-    },
-    {
-      "id": "dXMI0pII",
-      "message": "lox",
-      "from": "QWW8kBVX",
-      "to": "-7pWB6of",
-      "createdAt": 1649789223612
-    },
-    {
-      "id": "gxyHdR_1",
-      "message": "аа",
-      "from": "QWW8kBVX",
-      "to": "-7pWB6of",
-      "createdAt": 1649789432597
-    },
-    {
-      "id": "xmHAegC2",
-      "message": "аа",
-      "from": "QWW8kBVX",
-      "to": "-7pWB6of",
-      "createdAt": 1649789433756
-    },
-    {
-      "id": "UR2uMgs0",
-      "message": "аа",
-      "from": "QWW8kBVX",
-      "to": "-7pWB6of",
-      "createdAt": 1649789433889
-    },
-    {
-      "id": "3m-u68dS",
-      "message": "аа",
-      "from": "QWW8kBVX",
-      "to": "-7pWB6of",
-      "createdAt": 1649789435046
-    },
-    {
-      "id": "GX4AjYTt",
-      "message": "аа",
-      "from": "QWW8kBVX",
-      "to": "-7pWB6of",
-      "createdAt": 1649789450628
-    },
-    {
-      "id": "VSnt26Px",
-      "message": "аа",
-      "from": "QWW8kBVX",
-      "to": "-7pWB6of",
-      "createdAt": 1649789452912
-    },
-    {
-      "id": "C7uBspC-",
-      "message": "fff",
-      "from": "QWW8kBVX",
-      "to": "-7pWB6of",
-      "createdAt": 1649789484732
-    },
-    {
-      "id": "Gf1z3yId",
-      "message": "fff",
-      "from": "QWW8kBVX",
-      "to": "-7pWB6of",
-      "createdAt": 1649789486214
-    },
-    {
-      "id": "bBzi4xol",
-      "message": "fff",
-      "from": "QWW8kBVX",
-      "to": "-7pWB6of",
-      "createdAt": 1649789486323
-    },
-    {
-      "id": "tGpwh5Mi",
-      "message": "fff",
-      "from": "QWW8kBVX",
-      "to": "-7pWB6of",
-      "createdAt": 1649789487745
+      "id": "VGug1q7q",
+      "message": "123",
+      "from": "-7pWB6of",
+      "to": "QWW8kBVX",
+      "createdAt": 1649847522760
     }
   ]
 }
