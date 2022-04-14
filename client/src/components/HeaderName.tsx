@@ -15,7 +15,7 @@ export const HeaderName: FunctionComponent<HeaderNameProps> = ({ nickname, image
             <img src={image} alt="(*)" className="w-14 h-14 rounded-full object-cover shadow-3xl" />
             <h1 className="pl-4 tracking-wider">{nickname}</h1>
 
-            <span className="absolute right-0" onClick={logout}><HiOutlineLogout size={34} /></span>
+            <button className="absolute right-0" onClick={logout}><HiOutlineLogout size={34} /></button>
         </div >
     );
 }

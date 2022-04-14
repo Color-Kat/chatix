@@ -5,7 +5,9 @@
       "nickname": "ColorKat",
       "password": "$2b$10$JM9dkOsgd8bALEHvUORApucn8frShmj9hoSgu.T5w4RXaetQBFdLq",
       "image": "https://sun9-32.userapi.com/impf/c853428/v853428972/210be5/TEX4SUcRtK8.jpg?size=689x1080&quality=96&sign=9b6e14d8e04ace5ff72332c71015a281&type=album",
-      "myChats": [],
+      "myChats": [
+        "QWW8kBVX"
+      ],
       "notifications": {
         "QWW8kBVX": {
           "fromId": "QWW8kBVX",
@@ -19,7 +21,12 @@
       "password": "$2b$10$ncFfI16jud0ltEialwbkNe9jbAa8WnvwVYf7dlaKNn2YFYeh6oyc2",
       "image": "https://sun9-32.userapi.com/impf/c853428/v853428972/210be5/TEX4SUcRtK8.jpg?size=689x1080&quality=96&sign=9b6e14d8e04ace5ff72332c71015a281&type=album",
       "myChats": [],
-      "notifications": {}
+      "notifications": {
+        "-7pWB6of": {
+          "fromId": "-7pWB6of",
+          "count": 3
+        }
+      }
     },
     {
       "id": "QWW8kBVX",
@@ -30,7 +37,7 @@
       "notifications": {
         "-7pWB6of": {
           "fromId": "-7pWB6of",
-          "count": 61
+          "count": 66
         }
       }
     }

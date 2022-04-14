@@ -17,14 +17,13 @@ interface ChatProps {
 }
 
 export const Chat: FunctionComponent<ChatProps> = () => {
-    const { user, getUserById, addToMyChats } = useContext(authContext);
+    const { user, getUserById } = useContext(authContext);
     const { loadMessagesOf, currentMessages } = useContext(socketContext);
 
     const userId = user.id; // UserId of auth user (me)
     const { peerId } = useParams(); // UserId of companion (chat partner)
 
     const [peerUser, setPeerUser] = useState<IUser>();
-
 
     // Load peer user (companion)
     const loadPeerUser = async () => {
@@ -33,7 +32,7 @@ export const Chat: FunctionComponent<ChatProps> = () => {
     }
 
     const loadMessages = async () => {
-        const result = loadMessagesOf(peerId);
+        loadMessagesOf(peerId);
     }
 
     useEffect(() => {
@@ -42,9 +41,9 @@ export const Chat: FunctionComponent<ChatProps> = () => {
     }, []);
 
     return (
-        <section id="chat" className="relative h-screen flex flex-col w-full">
+        <section id="chat" className="relative h-full flex flex-col w-full">
             <Header>
-                <HeaderDialog nickname={peerUser?.nickname ?? ''} image={peerUser?.image ?? ''} />
+                <HeaderDialog peerUser={peerUser}  />
             </Header>
 
             <Main>
@@ -52,12 +51,6 @@ export const Chat: FunctionComponent<ChatProps> = () => {
             </Main>
 
             <MessageField peerId={peerId ?? ''} />
-
-
-
-            {/* chat
-            <button onClick={() => { sendMessage('Тестовое сообщение', 'QWW8kBVX') }}>Отправить</button> */}
-
 
         </section >
     );

@@ -60,7 +60,6 @@ export const SocketProvider: React.FC = ({ children }: any) => {
 
     const loadMessagesOf = (peerId: string) => {
         emit('messages_of', { peerId });
-        // setCurrentPeerId(peerId); // Save current peerId for update message list
     }
 
     /**

@@ -229,7 +229,7 @@ class AuthController {
         });
     }
 
-    async addToMychat (req, res) {
+    async addToMyChat (req, res) {
         const userId = checkAuth(req).id;
         const peerId = req.body.peerId;
 
@@ -239,7 +239,30 @@ class AuthController {
         });
 
         const user = db.data.users.find(user => user.id == userId);
-        if (!user.myChats.contains(peerId)) user.myChats.push(peerId);
+        if (!user.myChats.includes(peerId)) user.myChats.push(peerId);
+
+        await await db.write();
+
+        return res.status(200).json({
+            isSuccess: true
+        })
+    }
+
+    async removeFromMyChat (req, res) {
+        const userId = checkAuth(req).id;
+        const peerId = req.body.peerId;
+
+        if (!userId) return res.status(403).json({
+            isSuccess: false,
+            error: 'Вы не авторизированы'
+        });
+
+        const user = db.data.users.find(user => user.id == userId);
+
+        const index = user.myChats.indexOf(peerId);
+        if (index !== -1) user.myChats.splice(index, 1);
+
+        await await db.write();
 
         return res.status(200).json({
             isSuccess: true

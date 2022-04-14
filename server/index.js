@@ -37,7 +37,9 @@ app.post('/notifications', authController.getNotifications);
 
 app.post('/clear-notifications', authController.clearNotifications);
 
-app.post('/add-to-chats', authController.addToMychat);
+app.post('/add-to-chats', authController.addToMyChat);
+
+app.post('/remove-from-chats', authController.removeFromMyChat);
 
 chat(io);
 

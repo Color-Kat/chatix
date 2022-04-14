@@ -43,7 +43,8 @@ export const MessageField: FunctionComponent<MessageFieldProps> = ({ peerId }) =
     }, []);
 
     return (
-        <div className="message-field w-full flex h-8 sticky bottom-12 justify-between items-end">
+        // <div className="message-field w-full flex h-8 sticky bottom-12 justify-between items-end">
+        <div className="message-field w-full flex h-8 z-20 justify-between items-end mb-12 mt-3">
             <textarea
                 ref={textArea}
                 onChange={changeHandle}
@@ -59,7 +60,7 @@ export const MessageField: FunctionComponent<MessageFieldProps> = ({ peerId }) =
                 className="flex flex-1 bg-app-dark rounded-lg py-2 px-2.5 text-base tracking-wider outline-none resize-none shadow-lg"
             ></textarea>
             <button
-                className="h-10 w-10 bg-app-light flex items-center justify-center rounded-lg shadow-lg"
+                className="h-10 w-10 flex items-center justify-center rounded-lg shadow-lg bg-app-blue"
                 onClick={send}
             ><IoSend size={16} opacity="55" color="white" /></button>
         </div>

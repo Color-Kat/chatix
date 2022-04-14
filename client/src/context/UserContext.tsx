@@ -133,7 +133,33 @@ export const AuthProvider: React.FC = ({ children }: any) => {
         if (!result.isSuccess) {
             err(result.error)
             return false;
-        } else return true;
+        }
+
+        // user?.myChats.push(peerId);
+        // console.log(user);
+
+
+        return true;
+    }
+
+    const removeFromMyChats = async (peerId: string): Promise<boolean> => {
+        const result = await api('/remove-from-chats', { peerId });
+
+        if (!result.isSuccess) {
+            err(result.error)
+            return false;
+        }
+
+        // setUser(prev => {
+        //     if (!prev) return prev;
+
+        //     const index = prev.myChats.indexOf(peerId);
+        //     prev.myChats.splice(index, 1)
+        //     return prev;
+        // });
+
+
+        return true;
     }
 
     useEffect(() => {
@@ -167,7 +193,8 @@ export const AuthProvider: React.FC = ({ children }: any) => {
 
                 getUserByNickname,
                 getUserById,
-                addToMyChats
+                addToMyChats,
+                removeFromMyChats
             }}
         >
             {children}

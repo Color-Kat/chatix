@@ -1,21 +1,39 @@
-import { FunctionComponent } from "react";
+import { FunctionComponent, useContext, useEffect } from "react";
 import { IoMdArrowRoundBack } from "react-icons/io";
+import { BsFillPersonPlusFill, BsFillPersonDashFill } from "react-icons/bs";
 import { useNavigate } from "react-router-dom";
+import { authContext, IUser } from "../context/UserContext";
 
 interface HeaderDialogProps {
-    nickname: string;
-    image: string;
+    peerUser: IUser | undefined;
 }
 
-export const HeaderDialog: FunctionComponent<HeaderDialogProps> = ({ nickname, image }) => {
+export const HeaderDialog: FunctionComponent<HeaderDialogProps> = ({ peerUser }) => {
     const navigate = useNavigate();
+    const { user, addToMyChats, removeFromMyChats } = useContext(authContext);
+
+    useEffect(() => {
+        console.log(user.myChats, peerUser?.id, user.myChats.includes(peerUser?.id));
+
+    }, [peerUser]);
 
     return (
         <div id="chats" className="flex w-full items-center pb-3">
             <button className="mr-3" onClick={() => { navigate(-1) }}><IoMdArrowRoundBack /></button>
 
-            <img src={image} alt="(*)" className="w-12 h-12 rounded-full object-cover shadow-3xl" />
-            <h1 className="pl-4 tracking-wider text-3xl">{nickname}</h1>
+            <img src={peerUser?.image ?? ''} alt="(*)" className="w-12 h-12 rounded-full object-cover shadow-3xl" />
+            <h1 className="pl-4 tracking-wider text-3xl">{peerUser?.nickname ?? ''}</h1>
+
+            {!user.myChats.includes(peerUser?.id)
+                ? <button className="absolute right-0 h-8 w-8 flex items-center justify-center rounded-lg shadow-lg bg-app-blue" onClick={() => {
+                    addToMyChats(peerUser?.id);
+                }}><BsFillPersonPlusFill size={20} /></button>
+
+                : <button className="absolute right-0 h-8 w-8 flex items-center justify-center rounded-lg shadow-lg bg-app-orange" onClick={() => {
+                    removeFromMyChats(peerUser?.id);
+                }}><BsFillPersonDashFill size={20} /></button>
+            }
+
         </div >
     );
 }

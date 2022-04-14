@@ -13,7 +13,7 @@ interface ChatsProps {
 
 export const Chats: FunctionComponent<ChatsProps> = () => {
     const { user } = useContext(authContext);
-    console.log(user);
+    const myChats = user.myChats;
 
 
     return (
