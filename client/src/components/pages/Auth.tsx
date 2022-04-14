@@ -22,15 +22,9 @@ export const LoginField: FunctionComponent<LoginFieldProps> = ({ type, name, val
     );
 }
 
-interface AuthProps {
-
-}
-
-export const Auth: FunctionComponent<AuthProps> = () => {
+export const Auth: FunctionComponent<{}> = () => {
     const { register, login, error } = useContext(authContext);
-
     const [action, setAction] = useState<'login' | 'register'>('login');
-
     const [data, setData] = useState<{ nickname: string, password: string }>({
         nickname: '',
         password: ''
@@ -41,7 +35,6 @@ export const Auth: FunctionComponent<AuthProps> = () => {
             ...prev, [name]: e.target.value
         }));
     }
-
 
     return (
         <section id="auth" className="flex justify-center items-center w-full h-full flex-wrap container">

@@ -1,4 +1,4 @@
-import { FunctionComponent, useContext, useEffect, useState } from "react";
+import { FunctionComponent, memo, useCallback, useContext, useEffect, useState } from "react";
 import { useNavigate } from 'react-router-dom';
 import searchIcon from '../../assets/search.png';
 import { authContext } from "../context/UserContext";
@@ -7,17 +7,17 @@ import { authContext } from "../context/UserContext";
 interface HeaderSearchProps {
 }
 
-export const HeaderSearch: FunctionComponent<HeaderSearchProps> = () => {
+const HeaderSearch: FunctionComponent<HeaderSearchProps> = () => {
     const navigate = useNavigate();
     const { getUserByNickname } = useContext(authContext);
     const [nickname, setNickname] = useState<string>('');
 
-    const search = async () => {
+    const search = useCallback(async () => {
         const result = await getUserByNickname(nickname);
 
         if (result) navigate('/chat/' + result.id);
         else navigate('/user-404');
-    }
+    }, [nickname])
 
     return (
         <div id="header-search" className="flex w-full justify-betwee h-10 items-center">
@@ -37,3 +37,4 @@ export const HeaderSearch: FunctionComponent<HeaderSearchProps> = () => {
     );
 }
 
+export default memo(HeaderSearch);

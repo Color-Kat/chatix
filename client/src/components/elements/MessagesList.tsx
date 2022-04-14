@@ -1,4 +1,4 @@
-import { ChangeEvent, FunctionComponent, useContext, useEffect, useRef, useState } from "react";
+import { ChangeEvent, FunctionComponent, memo, useContext, useEffect, useRef, useState } from "react";
 import { IoSend } from 'react-icons/io5';
 import { IMessage, socketContext } from "../../context/SocketContext";
 
@@ -7,7 +7,7 @@ interface MessagesListProps {
     messages: IMessage[]; // Array of messages
 }
 
-export const MessagesList: FunctionComponent<MessagesListProps> = ({ userId, messages }) => {
+const MessagesList: FunctionComponent<MessagesListProps> = ({ userId, messages }) => {
     return (
         <div className="messages-list w-full flex flex-col px-2.5 pt-2">
             {messages.map(message => {
@@ -33,3 +33,5 @@ export const MessagesList: FunctionComponent<MessagesListProps> = ({ userId, mes
         </div>
     );
 }
+
+export default memo(MessagesList);

@@ -1,10 +1,10 @@
 import { FunctionComponent, useContext, useEffect } from "react";
 import { authContext } from "../../context/UserContext";
 
-import { Header } from "../elements/Header";
-import { Main } from '../elements/Main.jsx';
-import { HeaderName } from "../HeaderName";
-import { HeaderSearch } from "../HeaderSearch";
+import Header from "../elements/Header";
+import Main from '../elements/Main.jsx';
+import HeaderName from "../HeaderName";
+import HeaderSearch from "../HeaderSearch";
 
 
 interface ChatsProps {
@@ -13,6 +13,7 @@ interface ChatsProps {
 
 export const Chats: FunctionComponent<ChatsProps> = () => {
     const { user } = useContext(authContext);
+    
     const myChats = user.myChats;
 
 

@@ -1,4 +1,4 @@
-import { ChangeEvent, FunctionComponent, useContext, useEffect, useRef, useState } from "react";
+import { ChangeEvent, FunctionComponent, memo, useContext, useEffect, useRef, useState } from "react";
 import { IoSend } from 'react-icons/io5';
 import { socketContext } from "../../context/SocketContext";
 
@@ -6,7 +6,7 @@ interface MessageFieldProps {
     peerId: string
 }
 
-export const MessageField: FunctionComponent<MessageFieldProps> = ({ peerId }) => {
+const MessageField: FunctionComponent<MessageFieldProps> = ({ peerId }) => {
     const textArea = useRef<HTMLTextAreaElement>(null);
     const { sendMessage } = useContext(socketContext);
     const [message, setMessage] = useState<string>('');
@@ -66,3 +66,5 @@ export const MessageField: FunctionComponent<MessageFieldProps> = ({ peerId }) =
         </div>
     );
 }
+
+export default memo(MessageField);

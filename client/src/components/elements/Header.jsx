@@ -1,4 +1,4 @@
-import { useEffect } from "react";
+import { memo, useEffect } from "react";
 import { useState } from "react";
 import { Link } from "react-router-dom";
 import { useLocation } from 'react-router-dom';
@@ -14,7 +14,7 @@ const HeaderLinkMobile = ({ to, children }) => {
     </li>;
 }
 
-export const Header = ({ children }) => {
+const Header = ({ children }) => {
     return (
         // <header className="flex sticky top-0 w-full z-20 text-3xl flex-wrap items-center h-max">
         <header className="sticky w-full z-20 text-3xl flex-wrap items-center h-max">
@@ -26,3 +26,5 @@ export const Header = ({ children }) => {
         </header>
     );
 }
+
+export default memo(Header);

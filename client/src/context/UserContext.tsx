@@ -138,6 +138,18 @@ export const AuthProvider: React.FC = ({ children }: any) => {
         // user?.myChats.push(peerId);
         // console.log(user);
 
+        // TODO 
+        setUser(prev => {
+            console.log(prev);
+
+            if (!prev) return null;
+            const myChats = prev.myChats;
+            myChats.push(peerId);
+            return {
+                ...prev, myChats
+            };
+        })
+
 
         return true;
     }
@@ -151,8 +163,6 @@ export const AuthProvider: React.FC = ({ children }: any) => {
         }
 
         // setUser(prev => {
-        //     if (!prev) return prev;
-
         //     const index = prev.myChats.indexOf(peerId);
         //     prev.myChats.splice(index, 1)
         //     return prev;

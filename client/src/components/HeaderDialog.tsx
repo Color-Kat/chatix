@@ -1,4 +1,4 @@
-import { FunctionComponent, useContext, useEffect } from "react";
+import { FunctionComponent, memo, useContext, useEffect } from "react";
 import { IoMdArrowRoundBack } from "react-icons/io";
 import { BsFillPersonPlusFill, BsFillPersonDashFill } from "react-icons/bs";
 import { useNavigate } from "react-router-dom";
@@ -8,14 +8,9 @@ interface HeaderDialogProps {
     peerUser: IUser | undefined;
 }
 
-export const HeaderDialog: FunctionComponent<HeaderDialogProps> = ({ peerUser }) => {
+const HeaderDialog: FunctionComponent<HeaderDialogProps> = ({ peerUser }) => {
     const navigate = useNavigate();
     const { user, addToMyChats, removeFromMyChats } = useContext(authContext);
-
-    useEffect(() => {
-        console.log(user.myChats, peerUser?.id, user.myChats.includes(peerUser?.id));
-
-    }, [peerUser]);
 
     return (
         <div id="chats" className="flex w-full items-center pb-3">
@@ -38,3 +33,4 @@ export const HeaderDialog: FunctionComponent<HeaderDialogProps> = ({ peerUser })
     );
 }
 
+export default memo(HeaderDialog);

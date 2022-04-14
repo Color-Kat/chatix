@@ -1,4 +1,4 @@
-import { FunctionComponent, useContext } from "react";
+import { FunctionComponent, memo, useContext } from "react";
 import { HiOutlineLogout } from 'react-icons/hi';
 import { authContext } from "../context/UserContext";
 
@@ -7,7 +7,7 @@ interface HeaderNameProps {
     image: string;
 }
 
-export const HeaderName: FunctionComponent<HeaderNameProps> = ({ nickname, image }) => {
+const HeaderName: FunctionComponent<HeaderNameProps> = ({ nickname, image }) => {
     const { logout } = useContext(authContext);
 
     return (
@@ -20,3 +20,4 @@ export const HeaderName: FunctionComponent<HeaderNameProps> = ({ nickname, image
     );
 }
 
+export default memo(HeaderName);

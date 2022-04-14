@@ -1,12 +1,11 @@
-import { Footer } from "./Footer";
+import { memo } from "react";
 
-
-
-
-export const Main = ({ children }) => {
+const Main = ({ children }) => {
     return (
         <div id="main" className="flex-1 flex w-full overflow-y-scroll overflow-x-hidden no-scrollbar">
             {children}
         </div>
     );
 }
+
+export default memo(Main);

@@ -4,12 +4,12 @@ import { useParams } from "react-router-dom";
 import { socketContext } from "../../context/SocketContext";
 import { authContext, IUser } from "../../context/UserContext";
 
-import { Header } from '../elements/Header';
-import { Main } from '../elements/Main';
-import { MessageField } from "../elements/MessageField";
-import { MessagesList } from "../elements/MessagesList";
-import { HeaderDialog } from "../HeaderDialog";
-import { HeaderName } from "../HeaderName";
+import Header from '../elements/Header';
+import Main from '../elements/Main';
+import MessageField from "../elements/MessageField";
+import MessagesList from "../elements/MessagesList";
+import HeaderDialog from "../HeaderDialog";
+import HeaderName from "../HeaderName";
 import { User404 } from "./User404";
 
 interface ChatProps {
