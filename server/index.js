@@ -41,6 +41,8 @@ app.post('/add-to-chats', authController.addToMyChat);
 
 app.post('/remove-from-chats', authController.removeFromMyChat);
 
+app.post('/my-chats', authController.getMyChats);
+
 chat(io);
 
 httpServer.listen(4000, function () {

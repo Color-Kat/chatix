@@ -6,7 +6,7 @@ export interface IUser {
     nickname: string;
     password: string;
     image: string;
-    myChats: string[];
+    myChatsIds: string[];
     notifications: { [key: string]: INotifiication };
 }
 
@@ -15,6 +15,13 @@ export interface INotifiication {
     count: number;
 }
 export type Notifications = { [key: string]: INotifiication }[];
+
+export interface IMyChat {
+    chatId: string;
+    lastMessage: string;
+    peerUser: IUser;
+    notifications: number;
+}
 
 export const authContext = React.createContext<any>(null);
 
@@ -140,9 +147,9 @@ export const AuthProvider: React.FC = ({ children }: any) => {
 
         setUser(prev => {
             if (!prev) return prev;
-            const myChats = prev.myChats;
-            myChats.push(peerId);
-            return { ...prev, myChats };
+            const myChatsIds = prev.myChatsIds;
+            myChatsIds.push(peerId);
+            return { ...prev, myChatsIds };
         })
 
 
@@ -159,26 +166,38 @@ export const AuthProvider: React.FC = ({ children }: any) => {
 
         setUser(prev => {
             if (!prev) return prev;
-            const myChats = prev.myChats;
-            const index = myChats.indexOf(peerId);
-            myChats.splice(index, 1)
-            return { ...prev, myChats };
+            const myChatsIds = prev.myChatsIds;
+            const index = myChatsIds.indexOf(peerId);
+            myChatsIds.splice(index, 1)
+            return { ...prev, myChatsIds };
         });
 
 
         return true;
     }
 
+    // Get from server list of my chats with peerUser, notifications and last message
+    const getMyChats = async (): Promise<IMyChat | false> => {
+        const result = await api<{ myChats: IMyChat }>('/my-chats');
+
+        if (!result.isSuccess) {
+            err(result.error)
+            return false;
+        }
+
+        console.log(123);
+
+
+        return result.payload.myChats;
+    }
+
     useEffect(() => {
-        // logout()
         getAuthUser();
     }, []);
 
 
     // Reset errors
     useEffect(() => {
-        console.log(error);
-
         setTimeout(() => {
             setError("");
         }, 7000);
@@ -195,13 +214,15 @@ export const AuthProvider: React.FC = ({ children }: any) => {
                 register,
                 login,
                 logout,
+
                 notifications,
                 clearNotifications,
 
                 getUserByNickname,
                 getUserById,
                 addToMyChats,
-                removeFromMyChats
+                removeFromMyChats,
+                getMyChats
             }}
         >
             {children}

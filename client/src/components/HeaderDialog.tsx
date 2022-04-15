@@ -19,7 +19,7 @@ const HeaderDialog: FunctionComponent<HeaderDialogProps> = ({ peerUser }) => {
             <img src={peerUser?.image ?? ''} alt="(*)" className="w-12 h-12 rounded-full object-cover shadow-3xl" />
             <h1 className="pl-4 tracking-wider text-3xl">{peerUser?.nickname ?? ''}</h1>
 
-            {!user.myChats.includes(peerUser?.id)
+            {!user.myChatsIds.includes(peerUser?.id)
                 ? <button className="absolute right-0 h-8 w-8 flex items-center justify-center rounded-lg shadow-lg bg-app-blue" onClick={() => {
                     addToMyChats(peerUser?.id);
                 }}><BsFillPersonPlusFill size={20} /></button>

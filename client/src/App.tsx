@@ -1,6 +1,5 @@
-import { useState, useEffect, useContext } from 'react';
+import { useEffect, useContext } from 'react';
 import { Route, Routes } from "react-router-dom";
-import { Main } from "./components/elements/Main";
 import { authContext } from './context/UserContext';
 
 // Pages
@@ -12,7 +11,7 @@ import { socketContext } from './context/SocketContext';
 
 
 function App() {
-  const { user, logout } = useContext(authContext);
+  const { user } = useContext(authContext);
   const { setAuthUserId } = useContext(socketContext);
 
   useEffect(() => {
@@ -21,17 +20,6 @@ function App() {
 
   return (
     <div className="App bg-app text-white px-6 pt-12 font-roboto w-screen h-screen overflow-hidden">
-      {/* <button onClick={async () => {
-        console.log(await register('Client', '123'));
-      }}>Регистрация</button>
-
-      <button onClick={async () => {
-        console.log(await login('ColorKat', '123'));
-      }}>Логин</button> */}
-
-
-      {/* <button onClick={logout}>Выйти</button> */}
-
       {
         user &&
         <Routes>
@@ -41,9 +29,7 @@ function App() {
         </Routes>
       }
 
-      {
-        !user && <Auth />
-      }
+      {!user && <Auth />}
     </div>
   )
 }

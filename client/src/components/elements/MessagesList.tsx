@@ -8,14 +8,14 @@ interface MessagesListProps {
 }
 
 const MessagesList: FunctionComponent<MessagesListProps> = ({ userId, messages }) => {
-
-
     const messagesListElement = useRef<HTMLDivElement>(null);
 
     function scrollBottom() {
         if (messagesListElement.current)
             messagesListElement.current.scrollTop = messagesListElement.current?.scrollHeight;
     }
+
+    // Scroll to bottom when change messages array
     useEffect(() => {
         scrollBottom();
     }, [messages]);

@@ -66,6 +66,27 @@ class MessageController {
             payload: {messages, peerId}
         }
     }
+
+    getLastMessage(userId, peerId) {
+        if (!userId || !peerId) return [];
+
+        let isFound = false;
+        const lastMessage = db.data.messages.reverse().filter(message => {
+            if (
+                !isFound &&
+                ((message.to == peerId && message.from == userId) ||
+                (message.to == userId && message.from == peerId))
+            ) {
+                isFound = true;
+                return true;
+            } else return false;
+        })[0];
+
+        return {
+            isSuccess: true,
+            payload: {lastMessage}
+        }
+    }
 }
 
 export default new MessageController();

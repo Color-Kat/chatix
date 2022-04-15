@@ -6,6 +6,7 @@ import commonjsVariables from 'commonjs-variables-for-esmodules';
 import jwt from "jsonwebtoken";
 import { secret } from "../config/jwt_secret.js";
 import checkAuth from "../checkAuth.js";
+import messageController from "./messageController.js";
  
 const {__dirname,} = commonjsVariables(import.meta);
 
@@ -58,7 +59,7 @@ class AuthController {
             nickname,
             password: hashPassword,
             image: 'https://sun9-32.userapi.com/impf/c853428/v853428972/210be5/TEX4SUcRtK8.jpg?size=689x1080&quality=96&sign=9b6e14d8e04ace5ff72332c71015a281&type=album',
-            myChats: [],
+            myChatsIds: [],
             notifications: {}
         });
 
@@ -239,13 +240,13 @@ class AuthController {
         });
 
         const user = db.data.users.find(user => user.id == userId);
-        if (!user.myChats.includes(peerId)) user.myChats.push(peerId);
+        if (!user.myChatsIds.includes(peerId)) user.myChatsIds.push(peerId);
 
         await await db.write();
 
         return res.status(200).json({
             isSuccess: true
-        })
+        });
     }
 
     async removeFromMyChat (req, res) {
@@ -259,13 +260,47 @@ class AuthController {
 
         const user = db.data.users.find(user => user.id == userId);
 
-        const index = user.myChats.indexOf(peerId);
-        if (index !== -1) user.myChats.splice(index, 1);
+        const index = user.myChatsIds.indexOf(peerId);
+        if (index !== -1) user.myChatsIds.splice(index, 1);
 
         await await db.write();
 
         return res.status(200).json({
             isSuccess: true
+        });
+    }
+
+    getMyChats(req, res) {
+        const userId = checkAuth(req).id;
+
+        if (!userId) return res.status(403).json({
+            isSuccess: false,
+            error: 'Вы не авторизированы'
+        });
+
+        const user = db.data.users.find(user => user.id == userId);
+        const myChatsIds = user.myChatsIds;
+
+        const myChats = [];
+        myChatsIds.forEach(chatId => {
+            const peerUser = db.data.users.find(user => user.id == chatId);
+            const result = messageController.getLastMessage(userId, chatId);
+
+            if (result.isSuccess) {
+                myChats.push({
+                    chatId,
+                    lastMessage: result.payload.lastMessage,
+                    peerUser,
+                    notifications: user.notifications[chatId].count
+                });
+           }
+        });
+
+        return res.status(200).json({
+            isSuccess: true,
+            payload: {
+                myChats
+            }
         })
     }
 }
