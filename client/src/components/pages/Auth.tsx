@@ -1,4 +1,4 @@
-import { FunctionComponent, useContext, useState } from "react";
+import { FunctionComponent, memo, useCallback, useContext, useState } from "react";
 import { authContext } from "../../context/UserContext";
 
 interface LoginFieldProps {
@@ -9,7 +9,7 @@ interface LoginFieldProps {
     handleChange: (e: React.ChangeEvent<HTMLInputElement>, name: string) => void;
 }
 
-export const LoginField: FunctionComponent<LoginFieldProps> = ({ type, name, value, placeholder, handleChange }) => {
+export const LoginField: FunctionComponent<LoginFieldProps> = memo(({ type, name, value, placeholder, handleChange }) => {
     return (
         <input
             type={type}
@@ -20,7 +20,7 @@ export const LoginField: FunctionComponent<LoginFieldProps> = ({ type, name, val
             className="w-full my-1 bg-black bg-opacity-25 rounded-xl h-10 text-sm tracking-widest py-3 px-4 outline-none"
         />
     );
-}
+});
 
 export const Auth: FunctionComponent<{}> = () => {
     const { register, login, error } = useContext(authContext);
@@ -30,11 +30,11 @@ export const Auth: FunctionComponent<{}> = () => {
         password: ''
     });
 
-    const onFormChange = (e: React.ChangeEvent<HTMLInputElement>, name: string) => {
+    const onFormChange = useCallback((e: React.ChangeEvent<HTMLInputElement>, name: string) => {
         setData(prev => ({
             ...prev, [name]: e.target.value
         }));
-    }
+    }, []);
 
     return (
         <section id="auth" className="flex justify-center items-center w-full h-full flex-wrap container">

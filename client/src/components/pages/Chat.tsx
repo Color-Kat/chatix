@@ -22,7 +22,6 @@ export const Chat: FunctionComponent<ChatProps> = () => {
 
     const userId = user.id; // UserId of auth user (me)
     const { peerId } = useParams(); // UserId of companion (chat partner)
-
     const [peerUser, setPeerUser] = useState<IUser>();
 
     // Load peer user (companion)

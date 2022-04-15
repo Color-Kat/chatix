@@ -2,16 +2,11 @@ import { FunctionComponent, useContext, useEffect } from "react";
 import { authContext } from "../../context/UserContext";
 
 import Header from "../elements/Header";
-import Main from '../elements/Main.jsx';
+import Main from '../elements/Main';
 import HeaderName from "../HeaderName";
 import HeaderSearch from "../HeaderSearch";
 
-
-interface ChatsProps {
-
-}
-
-export const Chats: FunctionComponent<ChatsProps> = () => {
+export const Chats: FunctionComponent<{}> = () => {
     const { user } = useContext(authContext);
     
     const myChats = user.myChats;
@@ -20,7 +15,7 @@ export const Chats: FunctionComponent<ChatsProps> = () => {
     return (
         <section id="chats" className="h-screen flex flex-col">
             <Header>
-                <HeaderName nickname={user.nickname} image="https://sun9-32.userapi.com/impf/c853428/v853428972/210be5/TEX4SUcRtK8.jpg?size=689x1080&quality=96&sign=9b6e14d8e04ace5ff72332c71015a281&type=album" />
+                <HeaderName nickname={user.nickname} image={user.image} />
                 <HeaderSearch />
             </Header>
             <Main>

@@ -8,8 +8,20 @@ interface MessagesListProps {
 }
 
 const MessagesList: FunctionComponent<MessagesListProps> = ({ userId, messages }) => {
+
+
+    const messagesListElement = useRef<HTMLDivElement>(null);
+
+    function scrollBottom() {
+        if (messagesListElement.current)
+            messagesListElement.current.scrollTop = messagesListElement.current?.scrollHeight;
+    }
+    useEffect(() => {
+        scrollBottom();
+    }, [messages]);
+
     return (
-        <div className="messages-list w-full flex flex-col px-2.5 pt-2">
+        <div className="messages-list w-full flex flex-col px-2.5 pt-2 h-full overflow-scroll no-scrollbar" ref={messagesListElement}>
             {messages.map(message => {
                 const id = message.id;
                 const text = message.message;

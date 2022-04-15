@@ -1,4 +1,4 @@
-import { ChangeEvent, FunctionComponent, memo, useContext, useEffect, useRef, useState } from "react";
+import { ChangeEvent, FunctionComponent, memo, useCallback, useContext, useEffect, useRef, useState } from "react";
 import { IoSend } from 'react-icons/io5';
 import { socketContext } from "../../context/SocketContext";
 
@@ -11,7 +11,7 @@ const MessageField: FunctionComponent<MessageFieldProps> = ({ peerId }) => {
     const { sendMessage } = useContext(socketContext);
     const [message, setMessage] = useState<string>('');
 
-    const textAreaAutoResize = () => {
+    const textAreaAutoResize = useCallback(() => {
         if (textArea.current) {
             const textAreaElem = textArea.current;
             function pxToNumber(px: string) { return +px.slice(0, px.length - 2) }
@@ -26,17 +26,17 @@ const MessageField: FunctionComponent<MessageFieldProps> = ({ peerId }) => {
             if (pxToNumber(textAreaElem.style.height) < pxToNumber(textAreaElem.style.maxHeight))
                 textAreaElem.style.height = textAreaElem.scrollHeight + 'px';
         }
-    }
+    }, []);
 
     const changeHandle = (e: ChangeEvent<HTMLTextAreaElement>) => {
         textAreaAutoResize();
         setMessage(e.target.value);
     }
 
-    const send = async () => {
+    const send = useCallback(async () => {
         sendMessage(message, peerId);
         setMessage('');
-    }
+    }, [message, peerId]);
 
     useEffect(() => {
 
