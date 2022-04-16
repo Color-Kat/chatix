@@ -1,6 +1,6 @@
 import { FunctionComponent, memo, useCallback, useContext, useEffect, useState } from "react";
 import { useNavigate } from 'react-router-dom';
-import searchIcon from '../../assets/search.png';
+import searchIcon from '../assets/search.png';
 import { authContext } from "../context/UserContext";
 
 

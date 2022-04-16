@@ -6,6 +6,7 @@ import Header from "../elements/Header";
 import Main from '../elements/Main';
 import HeaderName from "../HeaderName";
 import HeaderSearch from "../HeaderSearch";
+import { Loader } from "./Loader";
 
 const ChatItem: FunctionComponent<{ myChat: IMyChat }> = memo(({ myChat }) => {
     const user = myChat.peerUser;
@@ -57,11 +58,14 @@ const ChatsList: FunctionComponent<{ myChats: IMyChat[] }> = memo(({ myChats }) 
 
 export const Chats: FunctionComponent<{}> = memo(() => {
     const { user, getMyChats } = useContext(authContext);
+    const [isLoading, setIsLoading] = useState<boolean>(false);
     const [myChats, setMyChats] = useState<IMyChat[]>([]);
 
     useEffect(() => {
         const loadMyChats = async () => {
+            setIsLoading(true);
             setMyChats(await getMyChats());
+            setIsLoading(false);
         };
 
         loadMyChats();
@@ -74,7 +78,10 @@ export const Chats: FunctionComponent<{}> = memo(() => {
                 <HeaderSearch />
             </Header>
             <Main>
-                <ChatsList myChats={myChats} />
+                {!isLoading
+                    ? <ChatsList myChats={myChats} />
+                    : <div className="flex mt-10 justify-center w-full"> <Loader /></div>
+                }
             </Main>
         </section >
     );

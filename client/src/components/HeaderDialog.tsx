@@ -4,6 +4,8 @@ import { BsFillPersonPlusFill, BsFillPersonDashFill } from "react-icons/bs";
 import { useNavigate } from "react-router-dom";
 import { authContext, IUser } from "../context/UserContext";
 
+import loading_gif from '../assets/loading.gif';
+
 interface HeaderDialogProps {
     peerUser: IUser | undefined;
 }
@@ -16,7 +18,7 @@ const HeaderDialog: FunctionComponent<HeaderDialogProps> = ({ peerUser }) => {
         <div id="chats" className="flex w-full items-center pb-3">
             <button className="mr-3" onClick={() => { navigate(-1) }}><IoMdArrowRoundBack /></button>
 
-            <img src={peerUser?.image ?? ''} alt="(*)" className="w-12 h-12 rounded-full object-cover shadow-3xl" />
+            <img src={peerUser?.image ?? loading_gif} alt="(*)" className="w-12 h-12 rounded-full object-cover shadow-3xl" />
             <h1 className="pl-4 text-3xl">{peerUser?.nickname ?? ''}</h1>
 
             {!user.myChatsIds.includes(peerUser?.id)
