@@ -84,17 +84,6 @@ class MessageController {
                 break;
             }
         }
-        
-        // .reverse().filter(message => {
-        //     if (
-        //         !isFound &&
-        //         ((message.to == peerId && message.from == userId) ||
-        //         (message.to == userId && message.from == peerId))
-        //     ) {
-        //         isFound = true;
-        //         return true;
-        //     } else return false;
-        // })[0];
 
         return {
             isSuccess: true,

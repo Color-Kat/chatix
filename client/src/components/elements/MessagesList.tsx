@@ -1,4 +1,4 @@
-import { ChangeEvent, FunctionComponent, memo, useContext, useEffect, useRef } from "react";
+import { ChangeEvent, FunctionComponent, memo, useCallback, useContext, useEffect, useRef } from "react";
 import { BsFillPersonPlusFill } from "react-icons/bs";
 import { IMessage, socketContext } from "../../context/SocketContext";
 import { authContext } from "../../context/UserContext";
@@ -30,10 +30,10 @@ export const MessagesListEmpty: FunctionComponent<{ peerId: string }> = memo(({ 
 export const MessagesList: FunctionComponent<MessagesListProps> = memo(({ userId, messages }) => {
     const messagesListElement = useRef<HTMLDivElement>(null);
 
-    function scrollBottom() {
+    const scrollBottom = useCallback(() => {
         if (messagesListElement.current)
             messagesListElement.current.scrollTop = messagesListElement.current?.scrollHeight;
-    }
+    }, []);
 
     // Scroll to bottom when change messages array
     useEffect(() => {

@@ -1,4 +1,4 @@
-import React, { memo, useEffect, useState } from "react";
+import React, { memo, useCallback, useEffect, useMemo, useState } from "react";
 import io from "socket.io-client";
 import { IApiResponse } from "../utils/api";
 
@@ -28,17 +28,30 @@ export const SocketProvider: React.FC = memo(({ children }: any) => {
         setError(mess ?? 'Произошла непредвиденная ошибка');
     }
 
-    function onEvent<T>(event: EventType, callback: (data: T) => void) {
-        socket.on(event, (data: IApiResponse<T>) => {
-            // console.log(data);
+    // function onEvent<T>(event: EventType, callback: (data: T) => void) {
 
-            if (!data.isSuccess) {
-                err(data.error);
-            } else callback(data.payload);
+    //     socket.on(event, (data: IApiResponse<T>) => {
+    //         // console.log(data);
 
-            connectUser();
-        });
-    }
+    //         if (!data.isSuccess) {
+    //             err(data.error);
+    //         } else callback(data.payload);
+
+    //         connectUser();
+    //     });
+    // }
+
+    // const onEvent = useCallback(function onEvent<T>(event: EventType, callback: (data: T) => void) {
+    //     socket.on(event, (data: IApiResponse<T>) => {
+    //         // console.log(data);
+
+    //         if (!data.isSuccess) {
+    //             err(data.error);
+    //         } else callback(data.payload);
+
+    //         connectUser();
+    //     });
+    // }, []);
 
     const emit = (event: EventType, data: any) => {
         data.authorization_token = localStorage.getItem('authorization_access_token') ?? '';
@@ -78,6 +91,18 @@ export const SocketProvider: React.FC = memo(({ children }: any) => {
     }
 
     useEffect(() => {
+        function onEvent<T>(event: EventType, callback: (data: T) => void) {
+            socket.on(event, (data: IApiResponse<T>) => {
+                // console.log(data);
+
+                if (!data.isSuccess) {
+                    err(data.error);
+                } else callback(data.payload);
+
+                connectUser();
+            });
+        };
+
         // Reconnect user after every socket connection
         socket.on('connect', () => {
             connectUser();
@@ -89,9 +114,9 @@ export const SocketProvider: React.FC = memo(({ children }: any) => {
         });
 
         onEvent<IMessage>('send_message', (data) => {
-            loadMessagesOf((authUserId == data.to ? data.from : data.to));
+            loadMessagesOf(authUserId == data.to ? data.from : data.to);
         });
-    }), [];
+    }, []);
 
     // Reset errors
     useEffect(() => {

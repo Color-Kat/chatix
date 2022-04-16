@@ -10,12 +10,14 @@ const container = document.getElementById('root') as Element;
 const root = createRoot(container);
 root.render(
   <React.StrictMode>
-    <AuthProvider>
-      <SocketProvider>
+    <SocketProvider>
+
+      <AuthProvider>
         <BrowserRouter>
           <App />
         </BrowserRouter>
-      </SocketProvider>
-    </AuthProvider>
+      </AuthProvider>
+    </SocketProvider>
+
   </React.StrictMode>
 );

@@ -10,14 +10,9 @@ import Main from '../elements/Main';
 import MessageField from "../elements/MessageField";
 import { MessagesList, MessagesListEmpty } from "../elements/MessagesList";
 import HeaderDialog from "../HeaderDialog";
-import HeaderName from "../HeaderName";
-import { User404 } from "./User404";
 
-interface ChatProps {
 
-}
-
-export const Chat: FunctionComponent<ChatProps> = () => {
+export const Chat: FunctionComponent<{}> = () => {
     const { user, getUserById } = useContext(authContext);
     const { loadMessagesOf, currentMessages } = useContext(socketContext);
 

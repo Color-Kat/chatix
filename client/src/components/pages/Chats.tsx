@@ -34,10 +34,6 @@ const ChatItem: FunctionComponent<{ myChat: IMyChat }> = memo(({ myChat }) => {
 
 
 const ChatsList: FunctionComponent<{ myChats: IMyChat[] }> = memo(({ myChats }) => {
-    useEffect(() => {
-        // console.log(1111111111);
-    }, [myChats]);
-
     if (!myChats.length) return (
         <div className="chats-list-empty w-full flex justify-center items-center">
             <h3 className="text-3xl text-center tracking-widest font-light text-white text-opacity-50">У вас нет чатов</h3>

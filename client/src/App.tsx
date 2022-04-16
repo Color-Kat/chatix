@@ -22,7 +22,7 @@ function App() {
   return (
     <div className="App bg-app text-white px-6 pt-12 font-roboto w-screen h-screen overflow-hidden">
       {isAppLoading && <AppLoader />}
-      
+
       {
         user &&
         <Routes>
