@@ -1,4 +1,4 @@
-import { useEffect, useContext } from 'react';
+import { useEffect, useContext, memo } from 'react';
 import { Route, Routes } from "react-router-dom";
 import { authContext } from './context/UserContext';
 
@@ -8,10 +8,11 @@ import { Chat } from "./components/pages/Chat";
 import { Auth } from "./components/pages/Auth";
 import { User404 } from './components/pages/User404';
 import { socketContext } from './context/SocketContext';
+import { AppLoader } from './components/pages/AppLoader';
 
 
 function App() {
-  const { user } = useContext(authContext);
+  const { user, isAppLoading } = useContext(authContext);
   const { setAuthUserId } = useContext(socketContext);
 
   useEffect(() => {
@@ -20,6 +21,8 @@ function App() {
 
   return (
     <div className="App bg-app text-white px-6 pt-12 font-roboto w-screen h-screen overflow-hidden">
+      {isAppLoading && <AppLoader />}
+      
       {
         user &&
         <Routes>
@@ -29,9 +32,9 @@ function App() {
         </Routes>
       }
 
-      {!user && <Auth />}
+      {!user && !isAppLoading && <Auth />}
     </div>
   )
 }
 
-export default App;
+export default memo(App);

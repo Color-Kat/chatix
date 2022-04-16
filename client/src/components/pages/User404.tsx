@@ -1,7 +1,7 @@
-import { FunctionComponent, useContext } from "react";
+import { FunctionComponent, memo, useContext } from "react";
 import { useNavigate } from "react-router-dom";
 
-export const User404: FunctionComponent<{}> = () => {
+export const User404: FunctionComponent<{}> = memo(() => {
     const navigate = useNavigate();
 
     const back = () => {
@@ -14,4 +14,4 @@ export const User404: FunctionComponent<{}> = () => {
             <button onClick={back} className="self-start underline text-lg tracking-wide my-2.5">Вернуться</button>
         </section>
     );
-}
+})

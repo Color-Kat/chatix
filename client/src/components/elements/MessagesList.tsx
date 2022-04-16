@@ -32,7 +32,7 @@ const MessagesList: FunctionComponent<MessagesListProps> = ({ userId, messages }
                 return (
 
                     <div className={`
-                        messages-list__message rounded-3xl tracking-wide text-base font-light
+                        messages-list__message rounded-3xl text-base font-light
                         px-4 py-2.5 pb-3 mb-3 shadow-sm
                         max-w-full relative text-white text-opacity-80
                         ${userId == from ? 'bg-app-dark self-end' : 'bg-app-light self-start'}

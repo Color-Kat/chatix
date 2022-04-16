@@ -17,7 +17,7 @@ const HeaderDialog: FunctionComponent<HeaderDialogProps> = ({ peerUser }) => {
             <button className="mr-3" onClick={() => { navigate(-1) }}><IoMdArrowRoundBack /></button>
 
             <img src={peerUser?.image ?? ''} alt="(*)" className="w-12 h-12 rounded-full object-cover shadow-3xl" />
-            <h1 className="pl-4 tracking-wider text-3xl">{peerUser?.nickname ?? ''}</h1>
+            <h1 className="pl-4 text-3xl">{peerUser?.nickname ?? ''}</h1>
 
             {!user.myChatsIds.includes(peerUser?.id)
                 ? <button className="absolute right-0 h-8 w-8 flex items-center justify-center rounded-lg shadow-lg bg-app-blue" onClick={() => {

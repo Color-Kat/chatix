@@ -1,5 +1,6 @@
-import React, { useEffect, useState } from "react";
-import { api } from "../utils/api";
+import React, { memo, useEffect, useState } from "react";
+import { api, IApiResponse } from "../utils/api";
+import { IMessage } from "./SocketContext";
 
 export interface IUser {
     id: string;
@@ -18,7 +19,7 @@ export type Notifications = { [key: string]: INotifiication }[];
 
 export interface IMyChat {
     chatId: string;
-    lastMessage: string;
+    lastMessage: IMessage;
     peerUser: IUser;
     notifications: number;
 }
@@ -26,6 +27,7 @@ export interface IMyChat {
 export const authContext = React.createContext<any>(null);
 
 export const AuthProvider: React.FC = ({ children }: any) => {
+    const [isAppLoading, setIsAppLoading] = useState<boolean>(false);
     const [isLoading, setIsLoading] = useState<boolean>(false);
     const [error, setError] = useState<string>("");
     const [user, setUser] = useState<IUser | null>(null);
@@ -36,9 +38,24 @@ export const AuthProvider: React.FC = ({ children }: any) => {
         setError(mess ?? 'Произошла непредвиденная ошибка');
     }
 
+    async function withAppLoader<T>(
+        callback: <T>(...params: any[]) => Promise<IApiResponse<T>>,
+        ...params: any[]
+    ) {
+        setIsAppLoading(true);
+        const result = await callback<T>(...params);
+        setIsAppLoading(false);
+        return result;
+    }
+
     // Set authorized user
     const getAuthUser = async (): Promise<IUser | boolean> => {
-        const result = await api<{ user: IUser }>('/user');
+        // setIsAppLoading(true);
+        // const result = await api<{ user: IUser }>('/user');
+        // setIsAppLoading(false);
+
+        const result = await withAppLoader<{ user: IUser }>(api, '/user');
+
         if (!result.isSuccess) {
             err(result.error);
             return false;
@@ -50,7 +67,9 @@ export const AuthProvider: React.FC = ({ children }: any) => {
 
     // register new user
     const register = async (nickname: string, password: string): Promise<boolean> => {
-        const result = await api('/register', { nickname, password });
+        // const result = await api('/register', { nickname, password });
+        const result = await withAppLoader(api, '/register', { nickname, password });
+
         if (!result.isSuccess) err(result.error);
 
         return result.isSuccess;
@@ -58,13 +77,11 @@ export const AuthProvider: React.FC = ({ children }: any) => {
 
     // Login user by nickname and password. If success, store jwt token
     const login = async (nickname: string, password: string): Promise<boolean> => {
-        console.log(nickname, password);
-
         // If success, we get jwt token
-        const result = await api<{
+        const result = await withAppLoader<{
             jwt_token: string,
             user: IUser
-        }>('/login', { nickname, password });
+        }>(api, '/login', { nickname, password });
 
         if (!result.isSuccess) {
             err(result.error)
@@ -185,16 +202,12 @@ export const AuthProvider: React.FC = ({ children }: any) => {
             return false;
         }
 
-        console.log(123);
-
-
         return result.payload.myChats;
     }
 
     useEffect(() => {
         getAuthUser();
     }, []);
-
 
     // Reset errors
     useEffect(() => {
@@ -207,7 +220,7 @@ export const AuthProvider: React.FC = ({ children }: any) => {
         <authContext.Provider
             value={{
                 error, // errors messages
-                isLoading, // loading state
+                isAppLoading, // loading state
 
                 user,
                 getAuthUser,

@@ -1,6 +1,6 @@
-import React, { useEffect, useState } from "react";
+import React, { memo, useEffect, useState } from "react";
 import io from "socket.io-client";
-import { api, IApiResponse } from "../utils/api";
+import { IApiResponse } from "../utils/api";
 
 export type EventType = 'connect' | 'connect_user' | 'send_message' | 'messages_of';
 export interface IMessage {
@@ -15,7 +15,7 @@ export const socket = io('ws://localhost:4000');
 
 export const socketContext = React.createContext<any>(null);
 
-export const SocketProvider: React.FC = ({ children }: any) => {
+export const SocketProvider: React.FC = memo(({ children }: any) => {
     const [isLoading, setIsLoading] = useState<boolean>(false);
     const [error, setError] = useState<string>("");
     const [notifications, setNotifications] = useState<{ peerId: string, count: number }[]>([]);
@@ -78,8 +78,6 @@ export const SocketProvider: React.FC = ({ children }: any) => {
     }
 
     useEffect(() => {
-
-
         // Reconnect user after every socket connection
         socket.on('connect', () => {
             connectUser();
@@ -91,13 +89,11 @@ export const SocketProvider: React.FC = ({ children }: any) => {
         });
 
         onEvent<IMessage>('send_message', (data) => {
-            console.log('me - ' + authUserId);
-            console.log((authUserId == data.to ? data.from : data.to));
+            console.log('event');
 
             loadMessagesOf((authUserId == data.to ? data.from : data.to));
         });
     }), [];
-
 
     // Reset errors
     useEffect(() => {
@@ -125,4 +121,4 @@ export const SocketProvider: React.FC = ({ children }: any) => {
             {children}
         </socketContext.Provider>
     );
-};
+});

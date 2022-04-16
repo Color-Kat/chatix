@@ -70,17 +70,31 @@ class MessageController {
     getLastMessage(userId, peerId) {
         if (!userId || !peerId) return [];
 
-        let isFound = false;
-        const lastMessage = db.data.messages.reverse().filter(message => {
+        const messages = db.data.messages;
+        let lastMessage = '';
+
+        // Iterate over array in reverse order
+        for (let i = messages.length - 1; i >= 0; i--){
+            const message = messages[i];
             if (
-                !isFound &&
-                ((message.to == peerId && message.from == userId) ||
-                (message.to == userId && message.from == peerId))
+                (message.to == peerId && message.from == userId) ||
+                (message.to == userId && message.from == peerId)
             ) {
-                isFound = true;
-                return true;
-            } else return false;
-        })[0];
+                lastMessage = message;
+                break;
+            }
+        }
+        
+        // .reverse().filter(message => {
+        //     if (
+        //         !isFound &&
+        //         ((message.to == peerId && message.from == userId) ||
+        //         (message.to == userId && message.from == peerId))
+        //     ) {
+        //         isFound = true;
+        //         return true;
+        //     } else return false;
+        // })[0];
 
         return {
             isSuccess: true,

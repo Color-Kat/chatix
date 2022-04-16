@@ -291,7 +291,7 @@ class AuthController {
                     chatId,
                     lastMessage: result.payload.lastMessage,
                     peerUser,
-                    notifications: user.notifications[chatId].count
+                    notifications: user.notifications[chatId]?.count ?? 0
                 });
            }
         });

@@ -45,6 +45,7 @@ code {
 
 .font-roboto{
   font-family: 'Roboto', sans-serif;
+  letter-spacing: 1px !important;
 }
 
 .no-scrollbar::-webkit-scrollbar {
