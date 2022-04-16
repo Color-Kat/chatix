@@ -13,29 +13,23 @@ const ChatItem: FunctionComponent<{ myChat: IMyChat }> = memo(({ myChat }) => {
     const date = new Date(myChat.lastMessage.createdAt);
     const dataOpt = { month: 'short', day: 'numeric' };
 
+
     return (
         <Link to={`/chat/${myChat.chatId}`}>
             <li className="chats-list__chat flex justify-between pb-6">
                 <img src={myChat.peerUser.image} alt="(*)" className="chats-list__left w-10 h-10 rounded-full object-cover shadow-3xl" />
                 <div className="chats-list__right flex-1 pl-4 relative">
                     <div className="chats-list__nickname text-base font-normal">{user.nickname}</div>
-                    <div className="chats-list__lastmessage text-white font-light text-xs">{lastmessage}</div>
+                    <div className="chats-list__lastmessage text-white font-light text-xs">{lastmessage ?? 'Вы не начали диалог'}</div>
 
-                    <span className="chats-list__date absolute right-0 top-1/2 -translate-y-1/2 text-sm">{date.toLocaleDateString('ru-RU', dataOpt as any)}</span>
+
+                    <span className="chats-list__date absolute right-0 top-1/2 -translate-y-1/2 text-sm">
+                        {lastmessage ? date.toLocaleDateString('ru-RU', dataOpt as any) : new Date(Date.now()).toLocaleDateString('ru-RU', dataOpt as any)}
+                    </span>
                 </div>
             </li>
         </Link>
     );
-
-    //     <li className="chats-list__chat flex justify-between pb-6">
-    //     <img src={myChat.peerUser.image} alt="(*)" className="chats-list__left w-11 h-11 rounded-full object-cover shadow-3xl" />
-    //     <div className="chats-list__right flex-1 pl-4 relative">
-    //         <div className="chats-list__nickname text-lg font-normal">{user.nickname}</div>
-    //         <div className="chats-list__lastmessage text-white font-light text-sm">{lastmessage}</div>
-
-    //         <span className="chats-list__date absolute right-0 top-1/2 -translate-y-1/2 text-sm">{date.toLocaleDateString('ru-RU', dataOpt as any)}</span>
-    //     </div>
-    // </li>
 })
 
 

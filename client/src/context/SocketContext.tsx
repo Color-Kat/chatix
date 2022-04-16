@@ -89,8 +89,6 @@ export const SocketProvider: React.FC = memo(({ children }: any) => {
         });
 
         onEvent<IMessage>('send_message', (data) => {
-            console.log('event');
-
             loadMessagesOf((authUserId == data.to ? data.from : data.to));
         });
     }), [];

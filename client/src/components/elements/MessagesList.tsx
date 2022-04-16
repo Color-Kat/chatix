@@ -1,13 +1,33 @@
-import { ChangeEvent, FunctionComponent, memo, useContext, useEffect, useRef, useState } from "react";
-import { IoSend } from 'react-icons/io5';
+import { ChangeEvent, FunctionComponent, memo, useContext, useEffect, useRef } from "react";
+import { BsFillPersonPlusFill } from "react-icons/bs";
 import { IMessage, socketContext } from "../../context/SocketContext";
+import { authContext } from "../../context/UserContext";
 
 interface MessagesListProps {
     userId: string; // Id of auth user to detect message owner
     messages: IMessage[]; // Array of messages
 }
 
-const MessagesList: FunctionComponent<MessagesListProps> = ({ userId, messages }) => {
+export const MessagesListEmpty: FunctionComponent<{ peerId: string }> = memo(({ peerId }) => {
+    const { addToMyChats, user } = useContext(authContext);
+
+    return (
+        <div className="messages-list-empty flex flex-col justify-center items-center w-full h-full">
+            {!user.myChatsIds.includes(peerId)
+                ? <>
+                    <button className="opacity-90 h-14 w-14 flex items-center justify-center rounded-lg shadow-lg bg-app-blue" onClick={() => {
+                        addToMyChats(peerId);
+                    }}><BsFillPersonPlusFill size={30} /></button>
+                    <span className="text-white text-opacity-50 mt-2 text-lg">Добавить чат</span>
+                </>
+
+                : <span className="text-white text-opacity-50 mt-2 text-lg">Начните диалог</span>
+            }
+        </div>
+    );
+});
+
+export const MessagesList: FunctionComponent<MessagesListProps> = memo(({ userId, messages }) => {
     const messagesListElement = useRef<HTMLDivElement>(null);
 
     function scrollBottom() {
@@ -44,6 +64,4 @@ const MessagesList: FunctionComponent<MessagesListProps> = ({ userId, messages }
             })}
         </div>
     );
-}
-
-export default memo(MessagesList);
+});

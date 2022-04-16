@@ -34,11 +34,33 @@
       "nickname": "Client",
       "password": "$2b$10$FKTlQaBlO1K2XI7TbG.9WOaiRCNFJLcyjQiXPvUzihdNt.fyFfO7m",
       "image": "https://sun9-32.userapi.com/impf/c853428/v853428972/210be5/TEX4SUcRtK8.jpg?size=689x1080&quality=96&sign=9b6e14d8e04ace5ff72332c71015a281&type=album",
-      "myChatsIds": [],
+      "myChatsIds": [
+        "j2n4hZIe"
+      ],
       "notifications": {
         "-7pWB6of": {
           "fromId": "-7pWB6of",
           "count": 72
+        },
+        "j2n4hZIe": {
+          "fromId": "j2n4hZIe",
+          "count": 3
+        }
+      }
+    },
+    {
+      "id": "j2n4hZIe",
+      "nickname": "Goose",
+      "password": "$2b$10$pKgodoySD9QbGXomkVH80exSx6LGDOVlYjF5ml6hd4NAk3D8gsLdO",
+      "image": "https://sun9-32.userapi.com/impf/c853428/v853428972/210be5/TEX4SUcRtK8.jpg?size=689x1080&quality=96&sign=9b6e14d8e04ace5ff72332c71015a281&type=album",
+      "myChatsIds": [
+        null,
+        "QWW8kBVX"
+      ],
+      "notifications": {
+        "QWW8kBVX": {
+          "fromId": "QWW8kBVX",
+          "count": 2
         }
       }
     }

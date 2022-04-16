@@ -1,4 +1,5 @@
 import { FunctionComponent, useContext, useEffect, useState } from "react";
+import { BsFillPersonPlusFill } from "react-icons/bs";
 import { IoLogoChrome } from "react-icons/io";
 import { useParams } from "react-router-dom";
 import { socketContext } from "../../context/SocketContext";
@@ -7,7 +8,7 @@ import { authContext, IUser } from "../../context/UserContext";
 import Header from '../elements/Header';
 import Main from '../elements/Main';
 import MessageField from "../elements/MessageField";
-import MessagesList from "../elements/MessagesList";
+import { MessagesList, MessagesListEmpty } from "../elements/MessagesList";
 import HeaderDialog from "../HeaderDialog";
 import HeaderName from "../HeaderName";
 import { User404 } from "./User404";
@@ -42,11 +43,15 @@ export const Chat: FunctionComponent<ChatProps> = () => {
     return (
         <section id="chat" className="relative h-full flex flex-col w-full">
             <Header>
-                <HeaderDialog peerUser={peerUser}  />
+                <HeaderDialog peerUser={peerUser} />
             </Header>
 
             <Main>
-                <MessagesList userId={userId} messages={currentMessages} />
+                {!currentMessages.length
+                    ? <MessagesListEmpty peerId={peerId ?? ''} />
+                    : <MessagesList userId={userId} messages={currentMessages} />
+                }
+
             </Main>
 
             <MessageField peerId={peerId ?? ''} />
