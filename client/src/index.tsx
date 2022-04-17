@@ -9,15 +9,17 @@ import { SocketProvider } from './context/SocketContext';
 const container = document.getElementById('root') as Element;
 const root = createRoot(container);
 root.render(
-  <React.StrictMode>
-    <SocketProvider>
-
-      <AuthProvider>
-        <BrowserRouter>
-          <App />
-        </BrowserRouter>
-      </AuthProvider>
-    </SocketProvider>
-
-  </React.StrictMode>
+  <SocketProvider>
+    <AuthProvider>
+      <BrowserRouter>
+        <App />
+      </BrowserRouter>
+    </AuthProvider>
+  </SocketProvider>
 );
+
+// root.render(
+//   <React.StrictMode>
+//     <App />
+//   </React.StrictMode>
+// );

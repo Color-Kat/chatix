@@ -18,6 +18,8 @@ const ChatItem: FunctionComponent<{ myChat: IMyChat }> = memo(({ myChat }) => {
     return (
         <Link to={`/chat/${myChat.chatId}`}>
             <li className="chats-list__chat flex justify-between pb-6">
+                <span className="chats-list__chat-notification">{myChat.notifications}</span>
+
                 <img src={myChat.peerUser.image} alt="(*)" className="chats-list__left w-10 h-10 rounded-full object-cover shadow-3xl" />
                 <div className="chats-list__right flex-1 pl-4 relative">
                     <div className="chats-list__nickname text-base font-normal">{user.nickname}</div>
@@ -62,6 +64,8 @@ export const Chats: FunctionComponent<{}> = memo(() => {
     const [myChats, setMyChats] = useState<IMyChat[]>([]);
 
     useEffect(() => {
+        console.log(123);
+
         const loadMyChats = async () => {
             setIsLoading(true);
             setMyChats(await getMyChats());

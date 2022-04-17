@@ -194,15 +194,18 @@ export const AuthProvider: React.FC = ({ children }: any) => {
     }
 
     // Get from server list of my chats with peerUser, notifications and last message
-    const getMyChats = async (): Promise<IMyChat | false> => {
-        const result = await api<{ myChats: IMyChat }>('/my-chats');
+    const getMyChats = async (): Promise<IMyChat[] | false> => {
+        const result = await api<{ myChats: IMyChat[] }>('/my-chats');
 
         if (!result.isSuccess) {
             err(result.error)
             return false;
         }
 
-        return result.payload.myChats;
+        // Sort by date
+        return result.payload.myChats.sort((a, b) => {
+            return (a.lastMessage.createdAt < b.lastMessage.createdAt ? 1 : -1);
+        });
     }
 
     useEffect(() => {

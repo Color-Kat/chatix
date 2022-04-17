@@ -14,6 +14,10 @@
         "QWW8kBVX": {
           "fromId": "QWW8kBVX",
           "count": 91
+        },
+        "j2n4hZIe": {
+          "fromId": "j2n4hZIe",
+          "count": 17
         }
       }
     },
@@ -41,7 +45,7 @@
       "notifications": {
         "-7pWB6of": {
           "fromId": "-7pWB6of",
-          "count": 72
+          "count": 75
         },
         "j2n4hZIe": {
           "fromId": "j2n4hZIe",
@@ -55,8 +59,8 @@
       "password": "$2b$10$pKgodoySD9QbGXomkVH80exSx6LGDOVlYjF5ml6hd4NAk3D8gsLdO",
       "image": "https://sun9-32.userapi.com/impf/c853428/v853428972/210be5/TEX4SUcRtK8.jpg?size=689x1080&quality=96&sign=9b6e14d8e04ace5ff72332c71015a281&type=album",
       "myChatsIds": [
-        null,
-        "QWW8kBVX"
+        "QWW8kBVX",
+        "-7pWB6of"
       ],
       "notifications": {
         "QWW8kBVX": {
@@ -65,7 +69,7 @@
         },
         "-7pWB6of": {
           "fromId": "-7pWB6of",
-          "count": 1
+          "count": 8
         }
       }
     }

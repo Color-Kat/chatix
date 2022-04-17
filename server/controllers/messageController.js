@@ -61,6 +61,8 @@ class MessageController {
             );
         });
 
+        console.log(peerId);
+
         return {
             isSuccess: true,
             payload: {messages, peerId}
