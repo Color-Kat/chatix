@@ -2,7 +2,7 @@ import React, { memo, useCallback, useEffect, useMemo, useState } from "react";
 import io from "socket.io-client";
 import { IApiResponse } from "../utils/api";
 
-export type EventType = 'connect' | 'connect_user' | 'send_message' | 'messages_of';
+export type EventType = 'connect' | 'connect_user' | 'send_message' | 'messages_of' | 'new_notification';
 export interface IMessage {
     id: string;
     message: string;
@@ -18,10 +18,17 @@ export const socketContext = React.createContext<any>(null);
 export const SocketProvider: React.FC = memo(({ children }: any) => {
     const [isLoading, setIsLoading] = useState<boolean>(false);
     const [error, setError] = useState<string>("");
+    const [isConnected, setIsConnected] = useState<boolean>(false);
     const [notifications, setNotifications] = useState<{ peerId: string, count: number }[]>([]);
     const [currentMessages, setCurrentMessages] = useState<IMessage[]>([]);
 
-    const [authUserId, setAuthUserId] = useState<string>('');
+    // const [authUserId, setAuthUserId] = useState<string>('');
+
+    // Object is link. It's fix unupdateable function with use authUserId. State don't update it! IDK!
+    const authUserId = { id: '' }
+    function setAuthUserId(id: string) {
+        authUserId.id = id
+    }
 
     function err(mess: string | undefined) {
         setError(mess ?? 'Произошла непредвиденная ошибка');
@@ -29,8 +36,6 @@ export const SocketProvider: React.FC = memo(({ children }: any) => {
 
     const onEvent = useCallback(function onEvent<T>(event: EventType, callback: (data: T) => void) {
         socket.on(event, (data: IApiResponse<T>) => {
-            // console.log(data);
-
             if (!data.isSuccess) {
                 err(data.error);
             } else callback(data.payload);
@@ -38,18 +43,6 @@ export const SocketProvider: React.FC = memo(({ children }: any) => {
             connectUser();
         });
     }, []);
-
-    // function onEvent<T>(event: EventType, callback: (data: T) => void) {
-    //     socket.on(event, (data: IApiResponse<T>) => {
-    //         // console.log(data);
-
-    //         if (!data.isSuccess) {
-    //             err(data.error);
-    //         } else callback(data.payload);
-
-    //         connectUser();
-    //     });
-    // };
 
     const emit = (event: EventType, data: any) => {
         data.authorization_token = localStorage.getItem('authorization_access_token') ?? '';
@@ -70,6 +63,8 @@ export const SocketProvider: React.FC = memo(({ children }: any) => {
      */
 
     const loadMessagesOf = (peerId: string) => {
+        console.log('emit');
+        setIsLoading(true);
         emit('messages_of', { peerId });
     }
 
@@ -90,16 +85,11 @@ export const SocketProvider: React.FC = memo(({ children }: any) => {
 
     const sendMessageEvent = useCallback(() => {
         onEvent<IMessage>('send_message', (data) => {
-            console.log('i am ' + authUserId);
-            console.log(authUserId == data.to ? data.from : data.to);
-
-            loadMessagesOf(authUserId === data.to ? data.from : data.to);
+            if (authUserId.id) loadMessagesOf(authUserId.id === data.to ? data.from : data.to);
         });
-    }, [authUserId]);
+    }, [authUserId])
 
     useEffect(() => {
-        if (!authUserId) return;
-
         // Reconnect user after every socket connection
         socket.on('connect', () => {
             connectUser();
@@ -108,9 +98,26 @@ export const SocketProvider: React.FC = memo(({ children }: any) => {
         // Save messages and companion peerId when we get messages of somebody
         onEvent<{ messages: IMessage[], peerId: string }>('messages_of', (data) => {
             setCurrentMessages(data.messages);
+            setIsLoading(false);
+        });
+
+
+        onEvent<{ peerId: string }>('new_notification', (data) => {
+            const sound = new Audio();
+            sound.src = '';
         });
 
         sendMessageEvent();
+        // onEvent<IMessage>('send_message', (data) => {
+        //     if (authUserId) loadMessagesOf(authUserId === data.to ? data.from : data.to);
+        // });
+
+        return () => {
+            socket.off('connect');
+            socket.off('messages_of');
+            socket.off('new_notification');
+            socket.off('send_message');
+        }
     }, []);
 
     // Reset errors
@@ -131,7 +138,7 @@ export const SocketProvider: React.FC = memo(({ children }: any) => {
                 loadMessagesOf,
                 sendMessage,
 
-                currentMessages,
+                currentMessages
             }}
         >
             {children}

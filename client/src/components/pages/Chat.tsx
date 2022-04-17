@@ -10,11 +10,12 @@ import Main from '../elements/Main';
 import MessageField from "../elements/MessageField";
 import { MessagesList, MessagesListEmpty } from "../elements/MessagesList";
 import HeaderDialog from "../HeaderDialog";
+import { Loader } from "./Loader";
 
 
 export const Chat: FunctionComponent<{}> = () => {
     const { user, getUserById } = useContext(authContext);
-    const { loadMessagesOf, currentMessages } = useContext(socketContext);
+    const { loadMessagesOf, currentMessages, isLoading } = useContext(socketContext);
 
     const userId = user.id; // UserId of auth user (me)
     const { peerId } = useParams(); // UserId of companion (chat partner)
@@ -29,11 +30,6 @@ export const Chat: FunctionComponent<{}> = () => {
     const loadMessages = async () => {
         loadMessagesOf(peerId);
     }
-
-    // useEffect(() => {
-    //     console.log(currentMessages);
-
-    // }, [currentMessages]);
 
     useEffect(() => {
         loadPeerUser(); // Load data about peer user (our companion)
@@ -53,6 +49,9 @@ export const Chat: FunctionComponent<{}> = () => {
                 }
 
             </Main>
+            {isLoading &&
+                <span className="absolute top-24 w-full flex justify-center"><Loader size={8} /></span>
+            }
 
             <MessageField peerId={peerId ?? ''} />
 
