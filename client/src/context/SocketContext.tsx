@@ -22,14 +22,24 @@ export const SocketProvider: React.FC = memo(({ children }: any) => {
     const [currentMessages, setCurrentMessages] = useState<IMessage[]>([]);
 
     const [authUserId, setAuthUserId] = useState<string>('');
-    // const [currentPeerId, setCurrentPeerId] = useState<string>();
 
     function err(mess: string | undefined) {
         setError(mess ?? 'Произошла непредвиденная ошибка');
     }
 
+    const onEvent = useCallback(function onEvent<T>(event: EventType, callback: (data: T) => void) {
+        socket.on(event, (data: IApiResponse<T>) => {
+            // console.log(data);
+
+            if (!data.isSuccess) {
+                err(data.error);
+            } else callback(data.payload);
+
+            connectUser();
+        });
+    }, []);
+
     // function onEvent<T>(event: EventType, callback: (data: T) => void) {
-
     //     socket.on(event, (data: IApiResponse<T>) => {
     //         // console.log(data);
 
@@ -39,19 +49,7 @@ export const SocketProvider: React.FC = memo(({ children }: any) => {
 
     //         connectUser();
     //     });
-    // }
-
-    // const onEvent = useCallback(function onEvent<T>(event: EventType, callback: (data: T) => void) {
-    //     socket.on(event, (data: IApiResponse<T>) => {
-    //         // console.log(data);
-
-    //         if (!data.isSuccess) {
-    //             err(data.error);
-    //         } else callback(data.payload);
-
-    //         connectUser();
-    //     });
-    // }, []);
+    // };
 
     const emit = (event: EventType, data: any) => {
         data.authorization_token = localStorage.getItem('authorization_access_token') ?? '';
@@ -90,18 +88,17 @@ export const SocketProvider: React.FC = memo(({ children }: any) => {
         });
     }
 
+    const sendMessageEvent = useCallback(() => {
+        onEvent<IMessage>('send_message', (data) => {
+            console.log('i am ' + authUserId);
+            console.log(authUserId == data.to ? data.from : data.to);
+
+            loadMessagesOf(authUserId === data.to ? data.from : data.to);
+        });
+    }, [authUserId]);
+
     useEffect(() => {
-        function onEvent<T>(event: EventType, callback: (data: T) => void) {
-            socket.on(event, (data: IApiResponse<T>) => {
-                // console.log(data);
-
-                if (!data.isSuccess) {
-                    err(data.error);
-                } else callback(data.payload);
-
-                connectUser();
-            });
-        };
+        if (!authUserId) return;
 
         // Reconnect user after every socket connection
         socket.on('connect', () => {
@@ -113,9 +110,7 @@ export const SocketProvider: React.FC = memo(({ children }: any) => {
             setCurrentMessages(data.messages);
         });
 
-        onEvent<IMessage>('send_message', (data) => {
-            loadMessagesOf(authUserId == data.to ? data.from : data.to);
-        });
+        sendMessageEvent();
     }, []);
 
     // Reset errors
@@ -132,12 +127,10 @@ export const SocketProvider: React.FC = memo(({ children }: any) => {
                 isLoading, // loading state
 
                 setAuthUserId,
-                // setCurrentPeerId,
 
                 loadMessagesOf,
                 sendMessage,
 
-                // currentPeerId,
                 currentMessages,
             }}
         >

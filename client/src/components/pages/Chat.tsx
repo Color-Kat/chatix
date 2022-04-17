@@ -30,6 +30,11 @@ export const Chat: FunctionComponent<{}> = () => {
         loadMessagesOf(peerId);
     }
 
+    // useEffect(() => {
+    //     console.log(currentMessages);
+
+    // }, [currentMessages]);
+
     useEffect(() => {
         loadPeerUser(); // Load data about peer user (our companion)
         loadMessages(); // Load all message. It will be available in variable currentMessages
@@ -42,7 +47,7 @@ export const Chat: FunctionComponent<{}> = () => {
             </Header>
 
             <Main>
-                {!currentMessages.length
+                {currentMessages.length === 0
                     ? <MessagesListEmpty peerId={peerId ?? ''} />
                     : <MessagesList userId={userId} messages={currentMessages} />
                 }

@@ -43,18 +43,19 @@ class WebSocketController {
         const userId = checkAuth(data.authorization_token).id;
         const peerId = data.peerId;
 
+        console.log(userId, peerId);
+
         if (!userId || !peerId) { return; }
 
         const result = messageController.getMessages(userId, peerId);
 
-        this.io.emit('messages_of', result);
+        this.io.to(userId).emit('messages_of', result);
     }
 
     async sendMessage(data) {
         // Get userId of sender
         const userId = checkAuth(data.authorization_token).id;
         if (!userId) { return; }
-        console.log('- New message from: ' + userId + '\n- To: ' + data.to + '\n- Message: ' + data.message);
 
         const result = await messageController.addMessage(data); // Add message to db
         this.io.to(userId).to(data.to).emit('send_message', result); // Send message to client to userId

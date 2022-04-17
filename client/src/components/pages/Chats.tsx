@@ -64,8 +64,6 @@ export const Chats: FunctionComponent<{}> = memo(() => {
     const [myChats, setMyChats] = useState<IMyChat[]>([]);
 
     useEffect(() => {
-        console.log(123);
-
         const loadMyChats = async () => {
             setIsLoading(true);
             setMyChats(await getMyChats());

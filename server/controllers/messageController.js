@@ -53,6 +53,8 @@ class MessageController {
     getMessages(userId, peerId) {
         if (!userId || !peerId) return [];
 
+        
+
         // Get message only for current user and peer user
         const messages = db.data.messages.filter(message => {
             return (
@@ -60,8 +62,6 @@ class MessageController {
                 (message.to == userId && message.from == peerId)
             );
         });
-
-        console.log(peerId);
 
         return {
             isSuccess: true,

@@ -16,7 +16,7 @@ function App() {
   const { setAuthUserId } = useContext(socketContext);
 
   useEffect(() => {
-    if (user) setAuthUserId(user.id);
+    setAuthUserId(user?.id);
   }, [user]);
 
   return (
