@@ -1,5 +1,6 @@
 import { FunctionComponent, memo, useCallback, useContext, useEffect, useState } from "react";
 import { Link } from "react-router-dom";
+import { socketContext } from "../../context/SocketContext";
 import { authContext, IMyChat } from "../../context/UserContext";
 
 import Header from "../elements/Header";
@@ -14,13 +15,18 @@ const ChatItem: FunctionComponent<{ myChat: IMyChat }> = memo(({ myChat }) => {
     const date = new Date(myChat.lastMessage.createdAt);
     const dataOpt = { month: 'short', day: 'numeric' };
 
-
     return (
         <Link to={`/chat/${myChat.chatId}`}>
-            <li className="chats-list__chat flex justify-between pb-6">
-                <span className="chats-list__chat-notification">{myChat.notifications}</span>
+            <li className="chats-list__chat flex justify-between pb-6 relative">
+                <div className="relative">
+                    {myChat.notifications > 0 &&
+                        <span className="chats-list__chat-notification absolute z-20 -top-3 -right-4 w-8 h-8 bg-app-gray flex items-center justify-center rounded-full text-sm">
+                            +{myChat.notifications}
+                        </span>
+                    }
+                    <img src={myChat.peerUser.image} alt="(*)" className="chats-list__left w-10 h-10 rounded-full object-cover shadow-3xl" />
+                </div>
 
-                <img src={myChat.peerUser.image} alt="(*)" className="chats-list__left w-10 h-10 rounded-full object-cover shadow-3xl" />
                 <div className="chats-list__right flex-1 pl-4 relative">
                     <div className="chats-list__nickname text-base font-normal">{user.nickname}</div>
                     <div className="chats-list__lastmessage text-white font-light text-xs">{lastmessage ?? 'Вы не начали диалог'}</div>
@@ -60,18 +66,30 @@ const ChatsList: FunctionComponent<{ myChats: IMyChat[] }> = memo(({ myChats }) 
 
 export const Chats: FunctionComponent<{}> = memo(() => {
     const { user, getMyChats } = useContext(authContext);
+    const { setNotificationFunction } = useContext(socketContext);
+
     const [isLoading, setIsLoading] = useState<boolean>(false);
     const [myChats, setMyChats] = useState<IMyChat[]>([]);
 
-    useEffect(() => {
-        const loadMyChats = async () => {
-            setIsLoading(true);
-            setMyChats(await getMyChats());
-            setIsLoading(false);
-        };
+    const loadMyChats = useCallback(async () => {
+        console.log('load');
 
-        loadMyChats();
+        setIsLoading(true);
+        setMyChats(await getMyChats());
+        setIsLoading(false);
     }, []);
+
+    useEffect(() => {
+        loadMyChats();
+        setNotificationFunction(loadMyChats);
+    }, []);
+
+    // Update chats list when new notification
+    // useEffect(() => {
+    //     console.log(newNotifications);
+
+    //     loadMyChats();
+    // }, [newNotifications]);
 
     return (
         <section id="chats" className="h-screen flex flex-col">

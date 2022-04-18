@@ -14,7 +14,7 @@ import { Loader } from "./Loader";
 
 
 export const Chat: FunctionComponent<{}> = () => {
-    const { user, getUserById } = useContext(authContext);
+    const { user, getUserById, clearNotifications } = useContext(authContext);
     const { loadMessagesOf, currentMessages, isLoading } = useContext(socketContext);
 
     const userId = user.id; // UserId of auth user (me)
@@ -34,6 +34,7 @@ export const Chat: FunctionComponent<{}> = () => {
     useEffect(() => {
         loadPeerUser(); // Load data about peer user (our companion)
         loadMessages(); // Load all message. It will be available in variable currentMessages
+        clearNotifications(peerId);
     }, []);
 
     return (

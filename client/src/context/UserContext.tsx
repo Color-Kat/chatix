@@ -110,7 +110,6 @@ export const AuthProvider: React.FC = ({ children }: any) => {
             err(result.error)
             return false;
         }
-        console.log(result);
 
         setNotifications(result.payload);
     }

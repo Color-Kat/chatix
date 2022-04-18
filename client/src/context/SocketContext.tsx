@@ -2,6 +2,8 @@ import React, { memo, useCallback, useEffect, useMemo, useState } from "react";
 import io from "socket.io-client";
 import { IApiResponse } from "../utils/api";
 
+import notification_sound from '../assets/notification.mp3';
+
 export type EventType = 'connect' | 'connect_user' | 'send_message' | 'messages_of' | 'new_notification';
 export interface IMessage {
     id: string;
@@ -18,8 +20,6 @@ export const socketContext = React.createContext<any>(null);
 export const SocketProvider: React.FC = memo(({ children }: any) => {
     const [isLoading, setIsLoading] = useState<boolean>(false);
     const [error, setError] = useState<string>("");
-    const [isConnected, setIsConnected] = useState<boolean>(false);
-    const [notifications, setNotifications] = useState<{ peerId: string, count: number }[]>([]);
     const [currentMessages, setCurrentMessages] = useState<IMessage[]>([]);
 
     // const [authUserId, setAuthUserId] = useState<string>('');
@@ -28,6 +28,12 @@ export const SocketProvider: React.FC = memo(({ children }: any) => {
     const authUserId = { id: '' }
     function setAuthUserId(id: string) {
         authUserId.id = id
+    }
+
+    // const [newNotificationFunction, setNewNotificationFunction] = useState<Function>();
+    const notificationFunction = { func: () => { } }
+    function setNotificationFunction(func: () => {}) {
+        notificationFunction.func = func;
     }
 
     function err(mess: string | undefined) {
@@ -63,7 +69,6 @@ export const SocketProvider: React.FC = memo(({ children }: any) => {
      */
 
     const loadMessagesOf = (peerId: string) => {
-        console.log('emit');
         setIsLoading(true);
         emit('messages_of', { peerId });
     }
@@ -83,6 +88,16 @@ export const SocketProvider: React.FC = memo(({ children }: any) => {
         });
     }
 
+    const notificationEvent = useCallback(() => {
+        const sound = new Audio();
+        sound.src = notification_sound;
+
+        onEvent<{ peerId: string }>('new_notification', (data) => {
+            notificationFunction.func();
+            sound.play();
+        });
+    }, [notificationFunction]);
+
     const sendMessageEvent = useCallback(() => {
         onEvent<IMessage>('send_message', (data) => {
             if (authUserId.id) loadMessagesOf(authUserId.id === data.to ? data.from : data.to);
@@ -101,11 +116,7 @@ export const SocketProvider: React.FC = memo(({ children }: any) => {
             setIsLoading(false);
         });
 
-
-        onEvent<{ peerId: string }>('new_notification', (data) => {
-            const sound = new Audio();
-            sound.src = '';
-        });
+        notificationEvent();
 
         sendMessageEvent();
         // onEvent<IMessage>('send_message', (data) => {
@@ -138,7 +149,8 @@ export const SocketProvider: React.FC = memo(({ children }: any) => {
                 loadMessagesOf,
                 sendMessage,
 
-                currentMessages
+                currentMessages,
+                setNotificationFunction
             }}
         >
             {children}

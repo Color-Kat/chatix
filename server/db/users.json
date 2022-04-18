@@ -11,14 +11,12 @@
         "j2n4hZIe"
       ],
       "notifications": {
-        "QWW8kBVX": {
-          "fromId": "QWW8kBVX",
-          "count": 91
-        },
+        "QWW8kBVX": null,
         "j2n4hZIe": {
           "fromId": "j2n4hZIe",
-          "count": 74
-        }
+          "count": 5
+        },
+        "tC9nUBVx": null
       }
     },
     {
@@ -67,10 +65,7 @@
           "fromId": "QWW8kBVX",
           "count": 4
         },
-        "-7pWB6of": {
-          "fromId": "-7pWB6of",
-          "count": 85
-        }
+        "-7pWB6of": null
       }
     }
   ]

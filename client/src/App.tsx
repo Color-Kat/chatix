@@ -13,7 +13,7 @@ import { AppLoader } from './components/pages/AppLoader';
 
 function App() {
   const { user, isAppLoading } = useContext(authContext);
-  const { setAuthUserId } = useContext(socketContext);
+  const { setAuthUserId, newNotifications } = useContext(socketContext);
 
   useEffect(() => {
     setAuthUserId(user?.id);

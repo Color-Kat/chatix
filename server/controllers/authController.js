@@ -195,8 +195,8 @@ class AuthController {
             error: 'Вы не авторизированы'
         });
 
-        const user = db.data.users.find(user => user.id == userId);
-        user.notifications[peerId] = undefined;
+        let user = db.data.users.find(user => user.id == userId);
+        user.notifications[peerId] = null;
 
         await await db.write();
 
