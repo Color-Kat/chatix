@@ -1,40 +1,41 @@
-import { useState, useEffect } from 'react';
-import io from "socket.io-client";
-import { Main } from "./components/Main";
+import { useEffect, useContext, memo } from 'react';
+import { Route, Routes } from "react-router-dom";
+import { authContext } from './context/UserContext';
 
-const socket = io('ws://localhost:4000');
+// Pages
+import { Chats } from "./components/pages/Chats";
+import { Chat } from "./components/pages/Chat";
+import { Auth } from "./components/pages/Auth";
+import { User404 } from './components/pages/User404';
+import { socketContext } from './context/SocketContext';
+import { AppLoader } from './components/pages/AppLoader';
+
 
 function App() {
+  const { user, isAppLoading } = useContext(authContext);
+  const { setAuthUserId, newNotifications } = useContext(socketContext);
+
   useEffect(() => {
-    socket.on('connection', (socket) => {
-
-      // socket.on('chat_message', (data: string) => {
-      //   console.log(data);
-      // });
-
-      // socket.on('messages', (data) => {
-      //   console.log(data);
-      // });
-
-      // socket.emit('messages', {
-      //   peerId: '2pnw0JCb',
-      //   authorization_token: "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjJwbncwSkNiIiwiaWF0IjoxNjQ5MTgyMzkxLCJleHAiOjE2NDk1Mjc5OTF9.9qstennisXP3TA8Q1GQZ7qMjhyeN_QxSJ1o5fNBCytM",
-      // });
-
-      // socket.emit('chat_message', {
-      //   authorization_token: "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjJwbncwSkNiIiwiaWF0IjoxNjQ5MTgyMzkxLCJleHAiOjE2NDk1Mjc5OTF9.9qstennisXP3TA8Q1GQZ7qMjhyeN_QxSJ1o5fNBCytM",
-      //   message: "Deine mutter ist fantastisch",
-      //   to: "2pnw0JCb"
-      // });
-    });
-
-  }, []);
+    setAuthUserId(user?.id);
+  }, [user]);
 
   return (
-    <div className="App">
-      <Main />
+    <div className="App bg-app text-white px-6 pt-12 font-roboto w-screen h-screen overflow-hidden">
+      {isAppLoading && <AppLoader />}
+
+      {
+        user &&
+        <Routes>
+          <Route path="/" element={<Chats />} />
+          <Route path="/chat/:peerId" element={<Chat />} />
+          <Route path="/avatar" element={<Avatar />} />
+          <Route path="/user-404" element={<User404 />} />
+        </Routes>
+      }
+
+      {!user && !isAppLoading && <Auth />}
     </div>
   )
 }
 
-export default App;
+export default memo(App);

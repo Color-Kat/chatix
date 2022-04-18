@@ -3,12 +3,67 @@
     {
       "id": "-7pWB6of",
       "nickname": "ColorKat",
-      "password": "$2b$10$JM9dkOsgd8bALEHvUORApucn8frShmj9hoSgu.T5w4RXaetQBFdLq"
+      "password": "$2b$10$JM9dkOsgd8bALEHvUORApucn8frShmj9hoSgu.T5w4RXaetQBFdLq",
+      "image": "https://sun9-32.userapi.com/impf/c853428/v853428972/210be5/TEX4SUcRtK8.jpg?size=689x1080&quality=96&sign=9b6e14d8e04ace5ff72332c71015a281&type=album",
+      "myChatsIds": [
+        "tC9nUBVx",
+        "QWW8kBVX",
+        "j2n4hZIe"
+      ],
+      "notifications": {
+        "j2n4hZIe": {
+          "fromId": "j2n4hZIe",
+          "count": 2
+        },
+        "QWW8kBVX": null,
+        "tC9nUBVx": null
+      }
     },
     {
       "id": "tC9nUBVx",
       "nickname": "ColorKat2",
-      "password": "$2b$10$ncFfI16jud0ltEialwbkNe9jbAa8WnvwVYf7dlaKNn2YFYeh6oyc2"
+      "password": "$2b$10$ncFfI16jud0ltEialwbkNe9jbAa8WnvwVYf7dlaKNn2YFYeh6oyc2",
+      "image": "https://sun9-32.userapi.com/impf/c853428/v853428972/210be5/TEX4SUcRtK8.jpg?size=689x1080&quality=96&sign=9b6e14d8e04ace5ff72332c71015a281&type=album",
+      "myChatsIds": [],
+      "notifications": {
+        "-7pWB6of": {
+          "fromId": "-7pWB6of",
+          "count": 3
+        }
+      }
+    },
+    {
+      "id": "QWW8kBVX",
+      "nickname": "Client",
+      "password": "$2b$10$FKTlQaBlO1K2XI7TbG.9WOaiRCNFJLcyjQiXPvUzihdNt.fyFfO7m",
+      "image": "https://sun9-32.userapi.com/impf/c853428/v853428972/210be5/TEX4SUcRtK8.jpg?size=689x1080&quality=96&sign=9b6e14d8e04ace5ff72332c71015a281&type=album",
+      "myChatsIds": [
+        "j2n4hZIe"
+      ],
+      "notifications": {
+        "-7pWB6of": {
+          "fromId": "-7pWB6of",
+          "count": 75
+        },
+        "j2n4hZIe": {
+          "fromId": "j2n4hZIe",
+          "count": 74
+        }
+      }
+    },
+    {
+      "id": "j2n4hZIe",
+      "nickname": "Goose",
+      "password": "$2b$10$pKgodoySD9QbGXomkVH80exSx6LGDOVlYjF5ml6hd4NAk3D8gsLdO",
+      "image": "https://sun9-32.userapi.com/impf/c853428/v853428972/210be5/TEX4SUcRtK8.jpg?size=689x1080&quality=96&sign=9b6e14d8e04ace5ff72332c71015a281&type=album",
+      "myChatsIds": [
+        "QWW8kBVX",
+        "-7pWB6of"
+      ],
+      "notifications": {
+        "QWW8kBVX": null,
+        "-7pWB6of": null
+      }
     }
   ]
 }

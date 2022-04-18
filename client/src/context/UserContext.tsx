@@ -207,6 +207,23 @@ export const AuthProvider: React.FC = ({ children }: any) => {
         });
     }
 
+    const loadAvatar = async (file: any) => {
+        const formData = new FormData();
+        formData.append('file', file);
+
+        const result = await api('/change-avatar', formData, true, true);
+
+        console.log(result);
+        
+
+        if (!result.isSuccess) {
+            err(result.error)
+            return false;
+        }
+
+        return result.isSuccess;
+    }
+
     useEffect(() => {
         getAuthUser();
     }, []);

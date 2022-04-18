@@ -43,6 +43,8 @@ app.post('/remove-from-chats', authController.removeFromMyChat);
 
 app.post('/my-chats', authController.getMyChats);
 
+app.post('/change-avatar', authController.changeAvatar);
+
 chat(io);
 
 httpServer.listen(4000, function () {

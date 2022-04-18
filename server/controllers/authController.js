@@ -295,11 +295,32 @@ class AuthController {
                 });
            }
         });
-
         return res.status(200).json({
             isSuccess: true,
             payload: {
                 myChats
+            }
+        })
+    }
+
+    changeAvatar(req, res) {
+        const userId = checkAuth(req).id;
+
+        if (!userId) return res.status(403).json({
+            isSuccess: false,
+            error: 'Вы не авторизированы'
+        });
+
+        const user = db.data.users.find(user => user.id == userId);
+
+
+        req.files.photo.mv('public/pics/'+req.files.photo.name);
+        res.end(req.files.photo.name);
+      
+        return res.status(200).json({
+            isSuccess: true,
+            payload: {
+                avatar: user.image
             }
         })
     }

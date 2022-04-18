@@ -7,6 +7,7 @@ import jwt from "jsonwebtoken";
 import { secret } from "../config/jwt_secret.js";
 import messageController from "./messageController.js";
 import checkAuth from "../checkAuth.js";
+import AuthController from "./AuthController.js";
  
 const {__dirname,} = commonjsVariables(import.meta);
 
@@ -23,37 +24,49 @@ class WebSocketController {
         this.socket = socket;
         this.io = io;
 
-        socket.on('messages', (data) => this.getMessages(data));
-        socket.on('chat_message', (data) => this.chatMessage(data));
+        socket.on('connect_user', (data) => this.connectUser(data));
+        socket.on('messages_of', (data) => this.getMessagesOf(data));
+        socket.on('send_message', (data) => this.sendMessage(data));
         socket.on('disconnect', () => this.disconnect());
-        
     }
 
-    async getMessages(data) {
+    connectUser(data) {
+        // Get userId of sender
+        const userId = checkAuth(data.authorization_token).id;
+        if (!userId) { return; }
+
+        // Join user to room by userId
+        this.socket.join(userId);
+    }
+
+    async getMessagesOf(data) {
         const userId = checkAuth(data.authorization_token).id;
         const peerId = data.peerId;
+
+        console.log(userId, peerId);
 
         if (!userId || !peerId) { return; }
 
         const result = messageController.getMessages(userId, peerId);
 
-        this.io.emit('messages', result);
+        this.io.to(userId).emit('messages_of', result);
     }
 
-    chatMessage(data) {
+    async sendMessage(data) {
         // Get userId of sender
         const userId = checkAuth(data.authorization_token).id;
         if (!userId) { return; }
-        console.log('- New message from: ' + userId + '\n- To: ' + data.to + '\n- Message: ' + data.message);
 
-        // Join user to room by userId
-        this.socket.join(userId);
+        const result = await messageController.addMessage(data); // Add message to db
+        const notification = await AuthController.newNotification(data.to, userId); // Add notification info into db
 
-        messageController.addMessage(data); // Add message to db
-        this.io.to(data.to).emit('chat_message', data); // Send message to client to userId
+        this.io.to(userId).to(data.to).emit('send_message', result); // Send message to client to userId
+
+        this.io.to(data.to).emit('new_notification', {
+            isSuccess: notification,
+            payload: {peerId: userId}
+        }); // Send new message notification
     }
-
-    
 
     disconnect() { console.log('User disconnected'); }
 }

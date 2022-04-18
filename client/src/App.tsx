@@ -9,6 +9,7 @@ import { Auth } from "./components/pages/Auth";
 import { User404 } from './components/pages/User404';
 import { socketContext } from './context/SocketContext';
 import { AppLoader } from './components/pages/AppLoader';
+import { Avatar } from './components/pages/Avatar';
 
 
 function App() {
@@ -28,6 +29,7 @@ function App() {
         <Routes>
           <Route path="/" element={<Chats />} />
           <Route path="/chat/:peerId" element={<Chat />} />
+          <Route path="/avatar" element={<Avatar />} />
           <Route path="/user-404" element={<User404 />} />
         </Routes>
       }

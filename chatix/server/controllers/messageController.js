@@ -32,24 +32,28 @@ class MessageController {
             error: "Пустое сообщение"
         }
 
-        messages.push({
+        const newMessage = {
             id: nanoid(8),
             message,
             from: userId,
             to,
             createdAt: Date.now()
-        });
+        }
+
+        messages.push(newMessage);
 
         await db.write();
 
         return {
             isSuccess: true,
-            payload: message
+            payload: newMessage
         }
     }
     
     getMessages(userId, peerId) {
         if (!userId || !peerId) return [];
+
+        
 
         // Get message only for current user and peer user
         const messages = db.data.messages.filter(message => {
@@ -61,7 +65,31 @@ class MessageController {
 
         return {
             isSuccess: true,
-            payload: {messages}
+            payload: {messages, peerId}
+        }
+    }
+
+    getLastMessage(userId, peerId) {
+        if (!userId || !peerId) return [];
+
+        const messages = db.data.messages;
+        let lastMessage = '';
+
+        // Iterate over array in reverse order
+        for (let i = messages.length - 1; i >= 0; i--){
+            const message = messages[i];
+            if (
+                (message.to == peerId && message.from == userId) ||
+                (message.to == userId && message.from == peerId)
+            ) {
+                lastMessage = message;
+                break;
+            }
+        }
+
+        return {
+            isSuccess: true,
+            payload: {lastMessage}
         }
     }
 }

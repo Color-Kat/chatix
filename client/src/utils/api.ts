@@ -6,7 +6,7 @@ export interface IApiResponse<T>{
 
 export const apiPath = 'http://localhost:4000';
 
-export async function api<T>(route: string, body: any = {}, auth = true): Promise<IApiResponse<T>> {
+export async function api<T>(route: string, body: any = {}, auth = true, rawBody = false): Promise<IApiResponse<T>> {
     const headers: any = {
         'Accept': 'application/json, text/plain, */*',
         'Content-Type': 'application/json'
@@ -23,7 +23,7 @@ export async function api<T>(route: string, body: any = {}, auth = true): Promis
         headers,
         // mode: 'no-cors',
         // credentials:'include',
-        body: JSON.stringify(body)
+        body: !rawBody ? JSON.stringify(body) : body
     });
 
     // console.log(await response);

@@ -29,7 +29,19 @@ app.post('/login', authController.login);
 
 app.post('/users', authController.getUsers);
 
-app.post('/user', authController.getUser);
+app.post('/user', authController.getAuthUser);
+
+app.post('/user/:requestedField', authController.getUserByNickname);
+
+app.post('/notifications', authController.getNotifications);
+
+app.post('/clear-notifications', authController.clearNotifications);
+
+app.post('/add-to-chats', authController.addToMyChat);
+
+app.post('/remove-from-chats', authController.removeFromMyChat);
+
+app.post('/my-chats', authController.getMyChats);
 
 chat(io);
 
