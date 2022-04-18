@@ -2,6 +2,7 @@ import { FunctionComponent, memo, useCallback, useContext, useEffect, useState }
 import { Link } from "react-router-dom";
 import { socketContext } from "../../context/SocketContext";
 import { authContext, IMyChat } from "../../context/UserContext";
+import { apiPath } from "../../utils/api";
 
 import Header from "../elements/Header";
 import Main from '../elements/Main';
@@ -24,7 +25,7 @@ const ChatItem: FunctionComponent<{ myChat: IMyChat }> = ({ myChat }) => {
                             +{myChat.notifications}
                         </span>
                     }
-                    <img src={myChat.peerUser.image} alt="(*)" className="chats-list__left w-10 h-10 rounded-full object-cover shadow-3xl" />
+                    <img src={apiPath + '/' + myChat.peerUser.image} alt="(*)" className="chats-list__left w-10 h-10 rounded-full object-cover shadow-3xl" />
                 </div>
 
                 <div className="chats-list__right flex-1 pl-4 relative">

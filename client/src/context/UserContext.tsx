@@ -209,12 +209,12 @@ export const AuthProvider: React.FC = ({ children }: any) => {
 
     const loadAvatar = async (file: any) => {
         const formData = new FormData();
-        formData.append('file', file);
+        formData.append('avatar', file);
 
         const result = await api('/change-avatar', formData, true, true);
 
         console.log(result);
-        
+
 
         if (!result.isSuccess) {
             err(result.error)
@@ -254,7 +254,8 @@ export const AuthProvider: React.FC = ({ children }: any) => {
                 getUserById,
                 addToMyChats,
                 removeFromMyChats,
-                getMyChats
+                getMyChats,
+                loadAvatar
             }}
         >
             {children}

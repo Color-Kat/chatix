@@ -8,8 +8,8 @@ export const apiPath = 'http://localhost:4000';
 
 export async function api<T>(route: string, body: any = {}, auth = true, rawBody = false): Promise<IApiResponse<T>> {
     const headers: any = {
-        'Accept': 'application/json, text/plain, */*',
-        'Content-Type': 'application/json'
+        // 'Accept': 'application/json, text/plain, */*',
+        // 'Content-Type': 'application/json'
     }
 
     // If query with auth check, add to header bearer access token

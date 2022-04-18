@@ -58,7 +58,7 @@ class AuthController {
             id: nanoid(8),
             nickname,
             password: hashPassword,
-            image: 'https://sun9-32.userapi.com/impf/c853428/v853428972/210be5/TEX4SUcRtK8.jpg?size=689x1080&quality=96&sign=9b6e14d8e04ace5ff72332c71015a281&type=album',
+            image: 'avatars/empty.png',
             myChatsIds: [],
             notifications: {}
         });
@@ -303,7 +303,7 @@ class AuthController {
         })
     }
 
-    changeAvatar(req, res) {
+    async changeAvatar(req, res) {
         const userId = checkAuth(req).id;
 
         if (!userId) return res.status(403).json({
@@ -313,14 +313,21 @@ class AuthController {
 
         const user = db.data.users.find(user => user.id == userId);
 
+        console.log(req.files);
 
-        req.files.photo.mv('public/pics/'+req.files.photo.name);
-        res.end(req.files.photo.name);
+        
+        const path = 'avatars/' + userId + '_' + nanoid() + '_' +  req.files.avatar.name;
+        req.files.avatar.mv('public/' + path);
+
+
+        user.image = path;
+
+        await db.write();
       
         return res.status(200).json({
             isSuccess: true,
             payload: {
-                avatar: user.image
+                avatar: path
             }
         })
     }

@@ -7,20 +7,24 @@ import authController from "./controllers/authController.js";
 import checkAuth from './checkAuth.js';
 import messageController from './controllers/messageController.js';
 import chat from './controllers/webSocketController.js';
+import fileUpload from 'express-fileupload';
+
 
 const app = express();
 const httpServer = http.createServer(app);
 
 app.use(cors());
-app.use(bodyParser.json());
-app.use(bodyParser.urlencoded({ extended: true }));
+app.use(bodyParser.json({limit: '50mb'}));
+app.use(bodyParser.urlencoded({ extended: true, limit: '50mb', parameterLimit: 100000 }));
+app.use(fileUpload({}));
+app.use(express.static('public'));
 
 const io = new Server(httpServer, {
     cors: {origin: '*'}
 });
 
 app.get('/', (req, res) => {
-    res.send('123');
+    res.send('234');
 })
 
 app.post('/register', authController.register);
