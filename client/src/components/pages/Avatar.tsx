@@ -2,12 +2,13 @@ import { ChangeEvent, FunctionComponent, memo, useContext } from "react";
 import { authContext } from "../../context/UserContext";
 
 export const Avatar: FunctionComponent<{}> = memo(() => {
-    const { loadAvatar } = useContext(authContext);
+    const { loadAvatar, getAuthUser } = useContext(authContext);
 
-    const changeHandler = (e: ChangeEvent<HTMLInputElement>) => {
+    const changeHandler = async (e: ChangeEvent<HTMLInputElement>) => {
         if (!e.target.files) return;
         const file = e.target.files[0];
-        loadAvatar(file);
+        const result = await loadAvatar(file);
+        getAuthUser();
     }
 
     return (

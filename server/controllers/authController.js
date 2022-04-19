@@ -77,6 +77,7 @@ class AuthController {
 
     async login(req, res) {
         const { nickname, password } = req.body;
+        console.log(req.body);
 
         // Empty fields
         if (!nickname || !password) return res.status(400).json({
@@ -312,13 +313,9 @@ class AuthController {
         });
 
         const user = db.data.users.find(user => user.id == userId);
-
-        console.log(req.files);
-
-        
+  
         const path = 'avatars/' + userId + '_' + nanoid() + '_' +  req.files.avatar.name;
         req.files.avatar.mv('public/' + path);
-
 
         user.image = path;
 

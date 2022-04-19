@@ -10,7 +10,7 @@ import HeaderName from "../HeaderName";
 import HeaderSearch from "../HeaderSearch";
 import { Loader } from "./Loader";
 
-const ChatItem: FunctionComponent<{ myChat: IMyChat }> = ({ myChat }) => {
+const ChatItem: FunctionComponent<{ myChat: IMyChat }> = memo(({ myChat }) => {
     const user = myChat.peerUser;
     const lastmessage = myChat.lastMessage.message;
     const date = new Date(myChat.lastMessage.createdAt);
@@ -40,18 +40,16 @@ const ChatItem: FunctionComponent<{ myChat: IMyChat }> = ({ myChat }) => {
             </li>
         </Link>
     );
-}
+})
 
-
-const ChatsList: FunctionComponent<{ myChats: IMyChat[] }> = ({ myChats }) => {
+const ChatsList: FunctionComponent<{ myChats: IMyChat[] }> = memo(({ myChats }) => {
     if (!myChats.length) return (
         <div className="chats-list-empty w-full flex justify-center items-center">
             <h3 className="text-3xl text-center tracking-widest font-light text-white text-opacity-50">У вас нет чатов</h3>
         </div>
     )
 
-    // console.log('chatsList', myChats);
-
+    console.log('chatsList', myChats);
 
     return (
         <ul className="chats-list w-full pt-3">
@@ -62,7 +60,7 @@ const ChatsList: FunctionComponent<{ myChats: IMyChat[] }> = ({ myChats }) => {
             })}
         </ul>
     );
-}
+})
 
 export const Chats: FunctionComponent<{}> = memo(() => {
     const { user, getMyChats } = useContext(authContext);
@@ -75,16 +73,22 @@ export const Chats: FunctionComponent<{}> = memo(() => {
         setIsLoading(true);
         const myChatsReault = await getMyChats();
         setMyChats(myChatsReault);
-        console.log('Chats in loadMyChats', myChats);
+
+        console.log('load', myChatsReault);
+
         setIsLoading(false);
     }, []);
+
+    console.log('body', myChats);
+
+    useEffect(() => {
+        console.log('We have gotten updated');
+    }, [myChats]);
 
     useEffect(() => {
         loadMyChats();
         setNotificationFunction(loadMyChats);
     }, []);
-
-    console.log('Chats in body', myChats);
 
 
     return (

@@ -91,8 +91,10 @@ export const SocketProvider: React.FC = memo(({ children }: any) => {
     const notificationEvent = useCallback(() => {
         const sound = new Audio();
         sound.src = notification_sound;
+        sound.volume = .5;
 
         onEvent<{ peerId: string }>('new_notification', (data) => {
+            if (notificationFunction.func) notificationFunction.func();
             sound.play();
         });
     }, [notificationFunction]);
@@ -111,8 +113,8 @@ export const SocketProvider: React.FC = memo(({ children }: any) => {
 
         // Save messages and companion peerId when we get messages of somebody
         onEvent<{ messages: IMessage[], peerId: string }>('messages_of', (data) => {
+            setIsLoading(false); // Turn of the loader
             setCurrentMessages(data.messages);
-            setIsLoading(false);
         });
 
         notificationEvent();

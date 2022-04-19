@@ -43,8 +43,6 @@ class WebSocketController {
         const userId = checkAuth(data.authorization_token).id;
         const peerId = data.peerId;
 
-        console.log(userId, peerId);
-
         if (!userId || !peerId) { return; }
 
         const result = messageController.getMessages(userId, peerId);

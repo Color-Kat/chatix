@@ -4,18 +4,18 @@
       "id": "-7pWB6of",
       "nickname": "ColorKat",
       "password": "$2b$10$JM9dkOsgd8bALEHvUORApucn8frShmj9hoSgu.T5w4RXaetQBFdLq",
-      "image": "avatars/-7pWB6of_y4nX28WWNg7weZmXbPmQY_d1fca51818159fcb2a7e61dede4d779c--brown-oxfords-adam-gallagher (1).jpg",
+      "image": "avatars/-7pWB6of_qVgmkJaadOsaVpDMsdcGe_3__2_.0.0.jpg",
       "myChatsIds": [
         "tC9nUBVx",
         "QWW8kBVX",
         "j2n4hZIe"
       ],
       "notifications": {
-        "j2n4hZIe": {
-          "fromId": "j2n4hZIe",
-          "count": 4
+        "j2n4hZIe": null,
+        "QWW8kBVX": {
+          "fromId": "QWW8kBVX",
+          "count": 5
         },
-        "QWW8kBVX": null,
         "tC9nUBVx": null,
         "undefined": null
       }
@@ -37,19 +37,14 @@
       "id": "QWW8kBVX",
       "nickname": "Client",
       "password": "$2b$10$FKTlQaBlO1K2XI7TbG.9WOaiRCNFJLcyjQiXPvUzihdNt.fyFfO7m",
-      "image": "avatars/empty.png",
+      "image": "avatars/QWW8kBVX_MuOxuK4vpMzmHB2wmDJzy_2be7480b7f1bb17057b65670376491bc.jpg",
       "myChatsIds": [
-        "j2n4hZIe"
+        "j2n4hZIe",
+        "-7pWB6of"
       ],
       "notifications": {
-        "-7pWB6of": {
-          "fromId": "-7pWB6of",
-          "count": 75
-        },
-        "j2n4hZIe": {
-          "fromId": "j2n4hZIe",
-          "count": 74
-        }
+        "-7pWB6of": null,
+        "j2n4hZIe": null
       }
     },
     {
