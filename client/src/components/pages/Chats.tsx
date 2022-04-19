@@ -73,23 +73,13 @@ export const Chats: FunctionComponent<{}> = memo(() => {
         setIsLoading(true);
         const myChatsReault = await getMyChats();
         setMyChats(myChatsReault);
-
-        console.log('load', myChatsReault);
-
         setIsLoading(false);
     }, []);
-
-    console.log('body', myChats);
-
-    useEffect(() => {
-        console.log('We have gotten updated');
-    }, [myChats]);
 
     useEffect(() => {
         loadMyChats();
         setNotificationFunction(loadMyChats);
     }, []);
-
 
     return (
         <section id="chats" className="h-screen flex flex-col">

@@ -8,7 +8,8 @@
       "myChatsIds": [
         "tC9nUBVx",
         "QWW8kBVX",
-        "j2n4hZIe"
+        "j2n4hZIe",
+        "67Rl4SVl"
       ],
       "notifications": {
         "j2n4hZIe": null,
@@ -17,7 +18,11 @@
           "count": 5
         },
         "tC9nUBVx": null,
-        "undefined": null
+        "undefined": null,
+        "67Rl4SVl": {
+          "fromId": "67Rl4SVl",
+          "count": 5
+        }
       }
     },
     {
@@ -63,6 +68,18 @@
           "count": 3
         },
         "undefined": null
+      }
+    },
+    {
+      "id": "67Rl4SVl",
+      "nickname": "Edge",
+      "password": "$2b$10$f/0Q5W9HBmhvkJaHl2cYOOUy.s2uwL1Kpmtt3m95bRaMZVNX41QtK",
+      "image": "avatars/empty.png",
+      "myChatsIds": [
+        "-7pWB6of"
+      ],
+      "notifications": {
+        "-7pWB6of": null
       }
     }
   ]
