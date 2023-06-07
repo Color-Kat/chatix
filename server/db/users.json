@@ -15,13 +15,21 @@
         "j2n4hZIe": null,
         "QWW8kBVX": {
           "fromId": "QWW8kBVX",
-          "count": 5
+          "count": 7
         },
         "tC9nUBVx": null,
         "undefined": null,
         "67Rl4SVl": {
           "fromId": "67Rl4SVl",
           "count": 5
+        },
+        "YqYBp8WQ": {
+          "fromId": "YqYBp8WQ",
+          "count": 1
+        },
+        "B5J3YOUc": {
+          "fromId": "B5J3YOUc",
+          "count": 1
         }
       }
     },
@@ -79,6 +87,51 @@
         "-7pWB6of"
       ],
       "notifications": {
+        "-7pWB6of": null
+      }
+    },
+    {
+      "id": "wO8QqnSs",
+      "nickname": "ColorKat12",
+      "password": "$2b$10$s0VtQS1NvrOO/otEakM9TuQkPaRHTweF7q.1FUKAYF3VJfHuTOuq2",
+      "image": "avatars/empty.png",
+      "myChatsIds": [
+        "-7pWB6of"
+      ],
+      "notifications": {
+        "-7pWB6of": null
+      }
+    },
+    {
+      "id": "YqYBp8WQ",
+      "nickname": "Color_Kat",
+      "password": "$2b$10$JoLjUOwcg8R1UL.e1IFefecRvBCE4ZWfZbDD5sfCHITHhSK4wI572",
+      "image": "avatars/YqYBp8WQ_I3J5Q_OE-u_Q6-KX3Hyab_avatar.jpg",
+      "myChatsIds": [
+        "B5J3YOUc"
+      ],
+      "notifications": {
+        "-7pWB6of": null,
+        "B5J3YOUc": {
+          "fromId": "B5J3YOUc",
+          "count": 1
+        }
+      }
+    },
+    {
+      "id": "B5J3YOUc",
+      "nickname": "Canary",
+      "password": "$2b$10$Rely3WnpdTu/m2gdXeWayuOlB7I3KtVkHrumW/2u4gRuxDz/456D.",
+      "image": "avatars/empty.png",
+      "myChatsIds": [
+        "YqYBp8WQ",
+        "-7pWB6of"
+      ],
+      "notifications": {
+        "YqYBp8WQ": {
+          "fromId": "YqYBp8WQ",
+          "count": 3
+        },
         "-7pWB6of": null
       }
     }

@@ -2,8 +2,6 @@ import React, { memo, useCallback, useEffect, useMemo, useState } from "react";
 import io from "socket.io-client";
 import { IApiResponse } from "../utils/api";
 
-import notification_sound from '../assets/notification.mp3';
-
 export type EventType = 'connect' | 'connect_user' | 'send_message' | 'messages_of' | 'new_notification';
 export interface IMessage {
     id: string;
@@ -90,7 +88,7 @@ export const SocketProvider: React.FC = memo(({ children }: any) => {
 
     const notificationEvent = useCallback(() => {
         const sound = new Audio();
-        sound.src = notification_sound;
+        sound.src = '../assets/notification.mp3';
         sound.volume = .5;
 
         onEvent<{ peerId: string }>('new_notification', (data) => {

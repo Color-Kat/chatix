@@ -11,7 +11,6 @@ import { socketContext } from './context/SocketContext';
 import { AppLoader } from './components/pages/AppLoader';
 import { Avatar } from './components/pages/Avatar';
 
-
 function App() {
   const { user, isAppLoading } = useContext(authContext);
   const { setAuthUserId, newNotifications } = useContext(socketContext);

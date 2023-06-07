@@ -1,6 +1,5 @@
 import { FunctionComponent, memo, useCallback, useContext, useEffect, useState } from "react";
 import { useNavigate } from 'react-router-dom';
-import searchIcon from '../assets/search.png';
 import { authContext } from "../context/UserContext";
 
 
@@ -31,7 +30,7 @@ const HeaderSearch: FunctionComponent<HeaderSearchProps> = () => {
             <button
                 onClick={search}
                 className="absolute z-10 right-0 w-10 h-10 bg-slate-500 flex justify-center items-center rounded-xl"
-            ><img src={searchIcon} alt="" /></button>
+            ><img src="/assets/search.png" alt="" /></button>
 
         </div >
     );
